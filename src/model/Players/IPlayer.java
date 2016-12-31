@@ -1,7 +1,5 @@
 package model.Players;
 
-import java.awt.*;
-
 /**
  * Created by danielchu on 12/30/16.
  */
@@ -12,9 +10,9 @@ import java.awt.*;
 public interface IPlayer {
 
   /**
-   * Gets the color of this team
+   * Gets this player's team.
    *
-   * @return the color/team this player is on.
+   * @return the team this player is on
    */
-  Color getTeam();
+  Team getTeam();
 }

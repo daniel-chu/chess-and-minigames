@@ -1,9 +1,5 @@
 package model.Board;
 
-import java.awt.*;
-
-import model.Pieces.IPiece;
-
 /**
  * Created by danielchu on 12/30/16.
  */

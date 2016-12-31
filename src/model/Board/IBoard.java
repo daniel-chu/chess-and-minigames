@@ -37,6 +37,16 @@ public interface IBoard {
   IPiece getPieceAt(int col, int row);
 
   /**
+   * Move the piece at the start coord to the end coord.
+   *
+   * @param fromCol   the column the piece we are moving is in
+   * @param fromRow   the row the piece we are moving is in
+   * @param targetCol the target column
+   * @param targetRow the target row
+   */
+  void movePieceFromTo(int fromCol, int fromRow, int targetCol, int targetRow);
+
+  /**
    * Gets width of the board (how many columns).
    *
    * @return how many columns wide the board is

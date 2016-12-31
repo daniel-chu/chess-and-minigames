@@ -10,7 +10,7 @@ public abstract class ABoard implements IBoard {
   /**
    * Represents the chess board. First [] is the column, second [] is the row.
    */
-  IPiece[][] board;
+  protected IPiece[][] board;
 
   /**
    * Constructor for a board.
@@ -41,6 +41,13 @@ public abstract class ABoard implements IBoard {
   @Override
   public int getWidth() {
     return this.board.length;
+  }
+
+  @Override
+  public void movePieceFromTo(int fromCol, int fromRow, int targetCol, int targetRow) {
+    this.board[fromCol][fromRow].moveTo(targetCol, targetRow);
+    this.board[targetCol][targetRow] = this.board[fromCol][fromRow];
+    this.board[fromCol][fromRow] = null;
   }
 
   @Override

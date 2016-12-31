@@ -1,6 +1,6 @@
 package model.Pieces;
 
-import java.awt.*;
+import model.Players.Team;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -16,12 +16,12 @@ public class Bishop extends APiece {
   /**
    * Constructor for a Bishop piece.
    *
-   * @param team the color/team of this piece
+   * @param team the team of this piece
    * @param col  the column this piece will be at
    * @param row  the row this piece will be at
    */
-  public Bishop(Color team, int col, int row) {
-    super(team, col, row);
+  public Bishop(Team team, int col, int row) {
+    super(team, col, row, PieceType.BISHOP);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package model.Pieces;
 
-import java.awt.*;
+import model.Players.Team;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -11,34 +11,40 @@ import java.awt.*;
  */
 public abstract class APiece implements IPiece {
   /**
-   * Color/team of this piece.
+   * Team of this piece.
    */
-  Color team;
+  protected final Team team;
 
   /**
    * The column this piece is at.
    */
-  int col;
+  protected int col;
 
   /**
    * The row this piece is at.
    */
-  int row;
+  protected int row;
+
+  /**
+   * The type this piece is.
+   */
+  PieceType type;
 
   /**
    * Constructor for a piece.
    *
-   * @param team the color/team of this piece
+   * @param team the team of this piece
    * @param col  the column this bishop will be at
    * @param row  the row this bishop will be at
    */
-  public APiece(Color team, int col, int row) {
+  public APiece(Team team, int col, int row, PieceType type) {
     if ((col < 0 || col > 7) || (row < 0 || row > 7)) {
       throw new IllegalArgumentException("Piece's column and row must range from 0 to 7.");
     }
     this.team = team;
     this.col = col;
     this.row = row;
+    this.type = type;
   }
 
   /**
@@ -70,5 +76,15 @@ public abstract class APiece implements IPiece {
   @Override
   public int getRow() {
     return this.row;
+  }
+
+  @Override
+  public Team getTeam() {
+    return this.team;
+  }
+
+  @Override
+  public PieceType getType() {
+    return this.type;
   }
 }
