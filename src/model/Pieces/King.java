@@ -7,8 +7,6 @@ import model.Players.Team;
  * Created by danielchu on 12/30/16.
  */
 
-// TODO implement valid move check
-
 /**
  * Class representing a standard King.
  */
@@ -36,6 +34,12 @@ public class King extends APiece {
     if (!super.validMove(targetCol, targetRow, board)) {
       return false;
     }
+    int distCol = Math.abs(this.col - targetCol);
+    int distRow = Math.abs(this.row - targetRow);
+    if (distCol > 2 || distRow > 2 || (distCol == 0 && distRow == 0)) {
+      return false;
+    }
+    // TODO implement check for if King will be in Check
     return true;
   }
 
