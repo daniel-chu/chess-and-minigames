@@ -37,14 +37,16 @@ public interface IBoard {
   IPiece getPieceAt(int col, int row);
 
   /**
-   * Move the piece at the start coord to the end coord.
+   * Move the piece at the start coord to the end coord, and returns a piece that was taken as a
+   * result of this move. Returns null if none.
    *
    * @param fromCol   the column the piece we are moving is in
    * @param fromRow   the row the piece we are moving is in
    * @param targetCol the target column
    * @param targetRow the target row
+   * @return the Piece that has been taken as a result of this move. null if none
    */
-  void movePieceFromTo(int fromCol, int fromRow, int targetCol, int targetRow);
+  IPiece movePieceFromTo(int fromCol, int fromRow, int targetCol, int targetRow);
 
   /**
    * Gets width of the board (how many columns).
@@ -59,5 +61,14 @@ public interface IBoard {
    * @return how many rows tall the board is
    */
   int getHeight();
+
+  /**
+   * Tells us if the pair of coordinates is valid (within range of this board)
+   *
+   * @param col the column of the coordinate
+   * @param row the row of the coordinate
+   * @return if this pair of coordinates is on this board
+   */
+  boolean validCoordinates(int col, int row);
 
 }

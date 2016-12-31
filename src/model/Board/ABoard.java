@@ -57,4 +57,12 @@ public abstract class ABoard implements IBoard {
     }
     return 0;
   }
+
+  @Override
+  public boolean validCoordinates(int col, int row) {
+    if(col < 0 || (col > this.getWidth() - 1) || row < 0 || (row > this.getHeight() - 1)) {
+      return false;
+    }
+    return true;
+  }
 }

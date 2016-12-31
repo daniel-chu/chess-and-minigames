@@ -78,11 +78,22 @@ public class StandardChess implements IChessGameModel {
   @Override
   public void movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
           IllegalArgumentException {
+    if (!this.board.validCoordinates(fromCol, fromRow) || !this.board.validCoordinates(targetCol,
+            targetRow)) {
+      throw new IllegalArgumentException("Invalid coordinates.");
+    }
     IPiece piece = this.board.getPieceAt(fromCol, fromRow);
     if (piece.getTeam() != this.currentPlayer.getTeam()) {
-      throw new IllegalArgumentException("You can only move pieces on your team");
+      throw new IllegalArgumentException("You can only move pieces on your team.");
     }
-    this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
+    if (!piece.validMove(targetCol, targetRow, this.board)) {
+      throw new IllegalArgumentException("Invalid move!");
+    }
+    // makes the move and stores the piece that was taken (null if none)
+    IPiece taken = this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
+
+    //TODO process removed piece if needed
+
     // switches whose turn it is
     if (this.currentPlayer.equals(p1)) {
       this.currentPlayer = p2;

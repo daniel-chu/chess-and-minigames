@@ -1,5 +1,6 @@
 package model.Pieces;
 
+import model.Board.IBoard;
 import model.Players.Team;
 
 /**
@@ -50,22 +51,30 @@ public abstract class APiece implements IPiece {
   /**
    * Checks if this piece can move to the specified location.
    *
-   * @param col   the column to move to
-   * @param row   the row to move to
+   * @param targetCol   the column to move to
+   * @param targetRow   the row to move to
    * @param board the board representing where all pieces are
    * @return if we can move the piece to that spot
    */
-  public abstract boolean validMove(int col, int row, IPiece[][] board);
+  public boolean validMove(int targetCol, int targetRow, IBoard board) {
+    IPiece currentPiece = board.getPieceAt(targetCol, targetRow);
+    if(currentPiece != null) {
+      if(currentPiece.getTeam() == this.team) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   /**
    * Moves the piece to the specified location.
    *
-   * @param col the column to move to
-   * @param row the row to move to
+   * @param targetCol the column to move to
+   * @param targetRow the row to move to
    */
-  public void moveTo(int col, int row) {
-    this.col = col;
-    this.row = row;
+  public void moveTo(int targetCol, int targetRow) {
+    this.col = targetCol;
+    this.row = targetRow;
   }
 
   @Override

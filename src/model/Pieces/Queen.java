@@ -6,6 +6,7 @@ package model.Pieces;
 
 // TODO implement valid move check
 
+import model.Board.IBoard;
 import model.Players.Team;
 
 /**
@@ -25,7 +26,10 @@ public class Queen extends APiece {
   }
 
   @Override
-  public boolean validMove(int col, int row, IPiece[][] board) {
+  public boolean validMove(int targetCol, int targetRow, IBoard board) {
+    if (!super.validMove(targetCol, targetRow, board)) {
+      return false;
+    }
     return true;
   }
 }

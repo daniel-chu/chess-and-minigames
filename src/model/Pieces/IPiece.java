@@ -1,10 +1,11 @@
 package model.Pieces;
 
+import model.Board.IBoard;
+import model.Players.Team;
+
 /**
  * Created by danielchu on 12/30/16.
  */
-
-import model.Players.Team;
 
 /**
  * Represents the interface for a piece.
@@ -14,20 +15,20 @@ public interface IPiece {
   /**
    * Checks if this piece can move to the specified location.
    *
-   * @param col   the column to move to
-   * @param row   the row to move to
+   * @param targetCol   the column to move to
+   * @param targetRow   the row to move to
    * @param board the board representing where all pieces are
    * @return if we can move the piece to that spot
    */
-  boolean validMove(int col, int row, IPiece[][] board);
+  boolean validMove(int targetCol, int targetRow, IBoard board);
 
   /**
    * Moves the piece to the specified location.
    *
-   * @param col the column to move to
-   * @param row the row to move to
+   * @param targetCol the column to move to
+   * @param targetRow the row to move to
    */
-  void moveTo(int col, int row);
+  void moveTo(int targetCol, int targetRow);
 
   /**
    * Gets the column this piece is in.

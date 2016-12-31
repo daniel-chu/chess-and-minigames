@@ -1,10 +1,10 @@
 package model.Pieces;
 
+import model.Players.Team;
+
 /**
  * Created by danielchu on 12/31/16.
  */
-
-import model.Players.Team;
 
 /**
  * Class to represent a piece's information necessary for display.

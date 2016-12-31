@@ -1,12 +1,11 @@
 package model.Pieces;
 
+import model.Board.IBoard;
 import model.Players.Team;
 
 /**
  * Created by danielchu on 12/30/16.
  */
-
-// TODO implement valid move check
 
 /**
  * Class representing a standard Bishop.
@@ -25,7 +24,18 @@ public class Bishop extends APiece {
   }
 
   @Override
-  public boolean validMove(int col, int row, IPiece[][] board) {
+  public boolean validMove(int targetCol, int targetRow, IBoard board) {
+    if (!super.validMove(targetCol, targetRow, board)) {
+      return false;
+    }
+    int distCol = Math.abs(this.col - targetCol);
+    int distRow = Math.abs(this.row - targetRow);
+    if (distCol == 0 || distRow == 0) {
+      return false;
+    }
+    if (distCol != distRow) {
+      return false;
+    }
     return true;
   }
 
