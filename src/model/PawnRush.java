@@ -26,10 +26,8 @@ public class PawnRush extends AChessGame {
     this.setupBoard();
   }
 
-  /**
-   * Sets up the board for pawn rush.
-   */
-  private void setupBoard() {
+  @Override
+  protected void setupBoard() {
     this.board = new StandardBoard();
     int row = 1;
     // sets up pawns
@@ -40,6 +38,16 @@ public class PawnRush extends AChessGame {
     this.board.addPiece(new Queen(p2.getTeam(), 3, 7), 3, 7);
   }
 
+  @Override
+  public IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
+          IllegalArgumentException {
+    IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
+    if(takenPiece != null) {
+      // game specific processing in here, or split into own method if necessary
+    }
+    this.handleTurns();
+    return takenPiece;
+  }
 
   @Override
   public int isGameOver() {
@@ -77,5 +85,16 @@ public class PawnRush extends AChessGame {
     }
     // otherwise, the game is still in progress
     return 0;
+  }
+
+  /**
+   * Changes whose turn it is.
+   */
+  private void handleTurns() {
+    if (this.currentPlayer.equals(p1)) {
+      this.currentPlayer = p2;
+    } else {
+      this.currentPlayer = p1;
+    }
   }
 }

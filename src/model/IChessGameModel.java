@@ -4,6 +4,7 @@ package model;
  * Created by danielchu on 12/30/16.
  */
 
+import model.pieces.IPiece;
 import model.pieces.PieceInfo;
 
 /**
@@ -13,14 +14,16 @@ public interface IChessGameModel {
 
   /**
    * Makes the piece move from its original location to the target location, if the move is valid.
+   * Also returns a piece that was taken as a result of this move. Returns null if none.
    *
    * @param fromCol   piece's original column
    * @param fromRow   piece's original row
    * @param targetCol target column
    * @param targetRow target row
+   * @return the piece that was taken as a result of this move - if none were taken, returns null.
    * @throws IllegalArgumentException if this move is not valid
    */
-  void movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
+  IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
           IllegalArgumentException;
 
   /**

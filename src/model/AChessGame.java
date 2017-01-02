@@ -43,15 +43,20 @@ public abstract class AChessGame implements IChessGameModel {
     this.currentPlayer = p1;
   }
 
+  /**
+   * Sets up the game board for a new game.
+   */
+  protected abstract void setupBoard();
+
   @Override
-  public void movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
+  public IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
           IllegalArgumentException {
     if (!this.board.validCoordinates(fromCol, fromRow) || !this.board.validCoordinates(targetCol,
             targetRow)) {
       throw new IllegalArgumentException("Invalid coordinates.");
     }
     IPiece piece = this.board.getPieceAt(fromCol, fromRow);
-    if(piece == null) {
+    if (piece == null) {
       throw new IllegalArgumentException("No piece there.");
     }
     if (piece.getTeam() != this.currentPlayer.getTeam()) {
@@ -63,15 +68,10 @@ public abstract class AChessGame implements IChessGameModel {
     // makes the move and stores the piece that was taken (null if none)
     IPiece takenPiece = this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
     if (takenPiece != null) {
-      //TODO process removed piece if needed
+      // process piece if needed (common to all gametypes) or split into own method if necessary
       System.out.println("\n\n" + takenPiece.getType().getValue());
     }
-    // switches whose turn it is
-    if (this.currentPlayer.equals(p1)) {
-      this.currentPlayer = p2;
-    } else {
-      this.currentPlayer = p1;
-    }
+    return takenPiece;
   }
 
   @Override

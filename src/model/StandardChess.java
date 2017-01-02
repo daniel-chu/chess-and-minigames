@@ -7,6 +7,10 @@ import model.players.IPlayer;
 /**
  * Created by danielchu on 12/30/16.
  */
+
+/**
+ * Standard chess game.
+ */
 public class StandardChess extends AChessGame {
 
   /**
@@ -20,10 +24,8 @@ public class StandardChess extends AChessGame {
     this.setupBoard();
   }
 
-  /**
-   * Sets up the board to match a standard game of chess' setup.
-   */
-  private void setupBoard() {
+  @Override
+  protected void setupBoard() {
     this.board = new StandardBoard();
     // sets up pawns
     int p1row = 1;
@@ -65,7 +67,29 @@ public class StandardChess extends AChessGame {
   }
 
   @Override
+  public IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
+          IllegalArgumentException {
+    IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
+    if (takenPiece != null) {
+      // game specific processing in here, or split into own method if necessary
+    }
+    this.handleTurns();
+    return takenPiece;
+  }
+
+  @Override
   public int isGameOver() {
     return 0;
+  }
+
+  /**
+   * Changes whose turn it is.
+   */
+  private void handleTurns() {
+    if (this.currentPlayer.equals(p1)) {
+      this.currentPlayer = p2;
+    } else {
+      this.currentPlayer = p1;
+    }
   }
 }
