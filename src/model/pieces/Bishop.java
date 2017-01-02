@@ -36,7 +36,7 @@ public class Bishop extends APiece {
     if (distCol != distRow) {
       return false;
     }
-    return true;
+    return super.pathFree(targetCol, targetRow, board);
   }
 
 }

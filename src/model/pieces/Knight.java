@@ -38,4 +38,10 @@ public class Knight extends APiece {
     }
     return true;
   }
+
+  @Override
+  protected boolean pathFree(int targetCol, int targetRow, IBoard board) {
+    // Knights hop over pieces, no need to check path
+    return true;
+  }
 }

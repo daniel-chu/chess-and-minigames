@@ -48,7 +48,6 @@ public class Pawn extends APiece {
     if (distCol < 0 || distCol > 1 || Math.abs(distRow) > 2 || distRow == 0) {
       return false;
     }
-
     // sets what a forward increment is for this pawn
     int forwardIncrement;
     if (this.upIsForward) {
@@ -58,28 +57,26 @@ public class Pawn extends APiece {
     }
     // if it is moving straight
     if (distCol == 0) {
-      if (distRow == forwardIncrement || (distRow == forwardIncrement * 2 && !this.hasMoved)) {
-        if(board.getPieceAt(targetCol, targetRow) == null) {
-          return true;
-        }
+      if ((distRow != forwardIncrement && (distRow != (2 * forwardIncrement) ||
+              this.hasMoved)) || (board.getPieceAt(targetCol, targetRow) != null)) {
+        return false;
       }
     }
     // if it is moving diagonal it must be taking something
-    if (distCol == 1 || distRow == forwardIncrement) {
-      if (this.isTakingPiece(targetCol, forwardIncrement, board)) {
-        return true;
+    if (distCol == 1 && distRow == forwardIncrement) {
+      if (!this.isTakingPiece(targetCol, forwardIncrement, board)) {
+        return false;
       }
     }
-    // todo implement en passant
-
-    return false;
+    return super.pathFree(targetCol, targetRow, board);
   }
 
   /**
    * Checks if this pawn is going to take a piece by moving to the given column, and one row
-   * forward.
+   * forward. Also will check if the piece is performing an en passant.
    */
   private boolean isTakingPiece(int targetCol, int forwardIncrement, IBoard board) {
+    // todo implement en passant
     int distCol = Math.abs(this.col - targetCol);
     if (distCol == 1) {
       if (board.getPieceAt(targetCol, this.row + forwardIncrement) != null) {

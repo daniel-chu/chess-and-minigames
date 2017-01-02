@@ -36,11 +36,11 @@ public class King extends APiece {
     }
     int distCol = Math.abs(this.col - targetCol);
     int distRow = Math.abs(this.row - targetRow);
-    if (distCol > 2 || distRow > 2 || (distCol == 0 && distRow == 0)) {
+    if (distCol > 1 || distRow > 1 || (distCol == 0 && distRow == 0)) {
       return false;
     }
     // TODO implement check for if King will be in Check
-    return true;
+    return super.pathFree(targetCol, targetRow, board);
   }
 
   @Override

@@ -30,6 +30,11 @@ public class Queen extends APiece {
     if (!super.validMove(targetCol, targetRow, board)) {
       return false;
     }
-    return true;
+    int distCol = Math.abs(this.col - targetCol);
+    int distRow = Math.abs(this.row - targetRow);
+    if (((distCol == 0) == (distRow == 0)) && (distCol != distRow)) {
+      return false;
+    }
+    return super.pathFree(targetCol, targetRow, board);
   }
 }

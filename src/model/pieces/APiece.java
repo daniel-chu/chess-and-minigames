@@ -51,17 +51,57 @@ public abstract class APiece implements IPiece {
   /**
    * Checks if this piece can move to the specified location.
    *
-   * @param targetCol   the column to move to
-   * @param targetRow   the row to move to
-   * @param board the board representing where all pieces are
+   * @param targetCol the column to move to
+   * @param targetRow the row to move to
+   * @param board     the board representing where all pieces are
    * @return if we can move the piece to that spot
    */
   public boolean validMove(int targetCol, int targetRow, IBoard board) {
+    // ensures the piece is not trying to move on top of its own team's piece
     IPiece currentPiece = board.getPieceAt(targetCol, targetRow);
-    if(currentPiece != null) {
-      if(currentPiece.getTeam() == this.team) {
+    if (currentPiece != null) {
+      if (currentPiece.getTeam() == this.team) {
         return false;
       }
+    }
+    return true;
+  }
+
+  /**
+   * Checks if the path is clear from where this piece is, to where the piece will be moving.
+   * Only applies to pieces that must have a clear path to move (ex. not applicable to Knights)
+   *
+   * Only runs after we have already checked that the target is a valid target square (runs at
+   * the end of validMove).
+   *
+   * @param targetCol the target column
+   * @param targetRow the target row
+   * @param board     the board we are checking with
+   * @return true if the path up til the target is clear, false if blocked
+   */
+  protected boolean pathFree(int targetCol, int targetRow, IBoard board) {
+    // total distances from here to the target
+    int xDist = targetCol - this.col;
+    int yDist = targetRow - this.row;
+    // how far each step will be
+    int steppingDistX = 0;
+    int steppingDistY = 0;
+    if (xDist != 0) {
+      steppingDistX = xDist / Math.abs(xDist);
+    }
+    if (yDist != 0) {
+      steppingDistY = yDist / Math.abs(yDist);
+    }
+    // the temporary coordinates of the piece as it follows the path from source to target
+    int tempCol = this.col + steppingDistX;
+    int tempRow = this.row + steppingDistY;
+    // makes sure the path is clear
+    while ((tempCol != targetCol) || (tempRow != targetRow)) {
+      if (board.getPieceAt(tempCol, tempRow) != null) {
+        return false;
+      }
+      tempCol += steppingDistX;
+      tempRow += steppingDistY;
     }
     return true;
   }
