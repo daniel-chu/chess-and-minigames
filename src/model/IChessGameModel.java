@@ -4,7 +4,7 @@ package model;
  * Created by danielchu on 12/30/16.
  */
 
-import model.Pieces.PieceInfo;
+import model.pieces.PieceInfo;
 
 /**
  * Interface for the model for a game of chess.
@@ -24,11 +24,12 @@ public interface IChessGameModel {
           IllegalArgumentException;
 
   /**
-   * Checks if the game is over.
+   * Tells us the status of the game. 0 if the game is not over, 1 if player 1 has won, and 2 if
+   * player 2 has won.
    *
-   * @return if a player has won or not
+   * @return the code representing if the game has been won yet, and if so, by who.
    */
-  boolean isGameOver();
+  int isGameOver();
 
   /**
    * Gets the player whose turn it currently is.

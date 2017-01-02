@@ -1,8 +1,8 @@
 package view;
 
-import model.Pieces.PieceInfo;
-import model.Pieces.PieceType;
-import model.Players.Team;
+import model.pieces.PieceInfo;
+import model.pieces.PieceType;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/30/16.

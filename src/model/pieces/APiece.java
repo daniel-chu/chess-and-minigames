@@ -1,7 +1,7 @@
-package model.Pieces;
+package model.pieces;
 
-import model.Board.IBoard;
-import model.Players.Team;
+import model.board.IBoard;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -39,8 +39,8 @@ public abstract class APiece implements IPiece {
    * @param row  the row this bishop will be at
    */
   public APiece(Team team, int col, int row, PieceType type) {
-    if ((col < 0 || col > 7) || (row < 0 || row > 7)) {
-      throw new IllegalArgumentException("Piece's column and row must range from 0 to 7.");
+    if (col < 0 || row < 0) {
+      throw new IllegalArgumentException("Piece's column and row must be greater than 0.");
     }
     this.team = team;
     this.col = col;

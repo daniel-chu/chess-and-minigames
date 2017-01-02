@@ -1,7 +1,7 @@
-package model.Pieces;
+package model.pieces;
 
-import model.Board.IBoard;
-import model.Players.Team;
+import model.board.IBoard;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/30/16.

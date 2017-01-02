@@ -1,6 +1,6 @@
-package model.Pieces;
+package model.pieces;
 
-import model.Players.Team;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/31/16.

@@ -25,7 +25,7 @@ public class BasicController implements IChessController {
     this.view.render();
     // creates scanner
     Scanner scanner = new Scanner(System.in);
-    while (!model.isGameOver()) {
+    while (model.isGameOver() == 0) {
       // player makes their turn
       try {
         // parses input

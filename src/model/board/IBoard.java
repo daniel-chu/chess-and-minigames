@@ -1,6 +1,6 @@
-package model.Board;
+package model.board;
 
-import model.Pieces.IPiece;
+import model.pieces.IPiece;
 
 /**
  * Created by danielchu on 12/30/16.

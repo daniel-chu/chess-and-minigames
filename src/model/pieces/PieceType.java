@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 /**
  * Created by danielchu on 12/30/16.

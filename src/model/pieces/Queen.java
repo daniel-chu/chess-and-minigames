@@ -1,4 +1,4 @@
-package model.Pieces;
+package model.pieces;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -6,8 +6,8 @@ package model.Pieces;
 
 // TODO implement valid move check
 
-import model.Board.IBoard;
-import model.Players.Team;
+import model.board.IBoard;
+import model.players.Team;
 
 /**
  * Class representing a standard Queen.

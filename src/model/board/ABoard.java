@@ -1,6 +1,6 @@
-package model.Board;
+package model.board;
 
-import model.Pieces.IPiece;
+import model.pieces.IPiece;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -20,7 +20,10 @@ public abstract class ABoard implements IBoard {
   }
 
   @Override
-  public void addPiece(IPiece piece, int col, int row) {
+  public void addPiece(IPiece piece, int col, int row) throws IllegalArgumentException {
+    if(col >= this.getWidth() || row >= this.getHeight() || col < 0 || row < 0) {
+      throw new IllegalArgumentException("Invalid coordinates.");
+    }
     if (this.board[col][row] == null) {
       this.board[col][row] = piece;
     } else {
@@ -44,10 +47,12 @@ public abstract class ABoard implements IBoard {
   }
 
   @Override
-  public void movePieceFromTo(int fromCol, int fromRow, int targetCol, int targetRow) {
+  public IPiece movePieceFromTo(int fromCol, int fromRow, int targetCol, int targetRow) {
     this.board[fromCol][fromRow].moveTo(targetCol, targetRow);
+    IPiece takenPiece = this.board[targetCol][targetRow];
     this.board[targetCol][targetRow] = this.board[fromCol][fromRow];
     this.board[fromCol][fromRow] = null;
+    return takenPiece;
   }
 
   @Override
@@ -60,7 +65,7 @@ public abstract class ABoard implements IBoard {
 
   @Override
   public boolean validCoordinates(int col, int row) {
-    if(col < 0 || (col > this.getWidth() - 1) || row < 0 || (row > this.getHeight() - 1)) {
+    if (col < 0 || (col > this.getWidth() - 1) || row < 0 || (row > this.getHeight() - 1)) {
       return false;
     }
     return true;

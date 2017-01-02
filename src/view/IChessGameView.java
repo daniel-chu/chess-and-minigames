@@ -1,6 +1,6 @@
 package view;
 
-import model.Pieces.PieceInfo;
+import model.pieces.PieceInfo;
 
 /**
  * Created by danielchu on 12/30/16.
