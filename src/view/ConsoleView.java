@@ -30,7 +30,7 @@ public class ConsoleView implements IChessGameView {
   }
 
   @Override
-  public void render() {
+  public void update() {
     if (board.length > 0) {
       System.out.println("\n\n\n\n");
       for (int row = board[0].length - 1; row > -1; row--) {

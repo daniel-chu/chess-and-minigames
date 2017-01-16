@@ -21,7 +21,7 @@ public interface IChessGameView {
   void setBoard(PieceInfo[][] board, int currentPlayer);
 
   /**
-   * Renders the board.
+   * Updates/renders the board.
    */
-  void render();
+  void update();
 }

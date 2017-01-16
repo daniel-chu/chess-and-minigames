@@ -22,7 +22,7 @@ public class BasicController implements IChessController {
   public void run() {
     // initial render
     this.view.setBoard(model.getBoard(), model.whosTurn());
-    this.view.render();
+    this.view.update();
     // creates scanner
     Scanner scanner = new Scanner(System.in);
     while (model.isGameOver() == 0) {
@@ -39,7 +39,7 @@ public class BasicController implements IChessController {
         // makes the move and updates the view
         this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
         this.view.setBoard(model.getBoard(), model.whosTurn());
-        this.view.render();
+        this.view.update();
       } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
       }
