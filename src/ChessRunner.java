@@ -28,6 +28,7 @@ public class ChessRunner {
     IChessController basicController = new BasicController(standardGame, consoleView);
     IChessController regularController = new ChessController(standardGame, guiView);
 
+//    basicController.run();
     regularController.run();
   }
 }

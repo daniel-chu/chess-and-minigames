@@ -70,15 +70,16 @@ public class GamePanel extends JPanel {
     Graphics2D g2 = (Graphics2D) g;
     g2.setColor(BROWN);
     if (board.length > 0) {
+      int maxRow = this.board[0].length - 1;
       for (int curRow = 0; curRow < board[0].length; curRow++) {
         for (int curCol = curRow % 2; curCol < board.length; curCol += 2) {
-          g2.fillRect(curRow * CELL_SIZE, curCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+          g2.fillRect((maxRow - curRow) * CELL_SIZE, curCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
       }
       g2.setColor(DARK_BROWN);
       for (int curRow = 0; curRow < board[0].length; curRow++) {
         for (int curCol = (curRow + 1) % 2; curCol < board.length; curCol += 2) {
-          g2.fillRect(curRow * CELL_SIZE, curCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+          g2.fillRect((maxRow - curRow) * CELL_SIZE, curCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
       }
     }
@@ -90,15 +91,16 @@ public class GamePanel extends JPanel {
   private void paintPieces(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
     if (board.length > 0) {
+      int maxRow = this.board[0].length - 1;
       for (int row = 0; row < this.board[0].length; row++) {
         for (int col = 0; col < this.board.length; col++) {
           PieceInfo piece = this.board[col][row];
           if (piece.getTeam() == Team.ONE) {
             ImageIcon pieceImage = this.whitePieceImages.getImage(piece.getType());
-            pieceImage.paintIcon(this, g, col * CELL_SIZE, row * CELL_SIZE);
+            pieceImage.paintIcon(this, g, col * CELL_SIZE, (maxRow - row) * CELL_SIZE);
           } else if (piece.getTeam() == Team.TWO) {
             ImageIcon pieceImage = this.blackPieceImages.getImage(piece.getType());
-            pieceImage.paintIcon(this, g, col * CELL_SIZE, row * CELL_SIZE);
+            pieceImage.paintIcon(this, g, col * CELL_SIZE, (maxRow - row) * CELL_SIZE);
           }
         }
       }
