@@ -32,7 +32,7 @@ public class PawnRush extends AChessGame {
     int row = 1;
     // sets up pawns
     for (int col = 0; col < this.board.getWidth(); col++) {
-      this.board.addPiece(new Pawn(p1.getTeam(), col, row, true), col, row);
+      this.board.addPiece(new Pawn(p1.getTeam(), col, row), col, row);
     }
     // sets up the queen
     this.board.addPiece(new Queen(p2.getTeam(), 3, 7), 3, 7);

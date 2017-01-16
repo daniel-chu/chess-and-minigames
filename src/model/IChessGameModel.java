@@ -42,7 +42,8 @@ public interface IChessGameModel {
   int whosTurn();
 
   /**
-   * Gets a 2d array representing the location of all pieces in this game.
+   * Gets a 2d array representing the location of all pieces in this game. The first array is the
+   * column, the second row. So [3][5] would be col 3 row 5.
    *
    * @return the 2d array representing this game
    */

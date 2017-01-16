@@ -1,5 +1,9 @@
 package model.pieces;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import model.board.IBoard;
 import model.players.Team;
 
@@ -29,7 +33,7 @@ public abstract class APiece implements IPiece {
   /**
    * The type this piece is.
    */
-  PieceType type;
+  protected final PieceType type;
 
   /**
    * Constructor for a piece.
@@ -117,6 +121,41 @@ public abstract class APiece implements IPiece {
     this.row = targetRow;
   }
 
+  public List<IPiece> canBeTakenBy(IBoard board) {
+    List<IPiece> result = new ArrayList<IPiece>();
+    // TODO finish this
+
+    return result;
+  }
+
+  public abstract List<IPiece> canTakeThese(IBoard board);
+
+  /**
+   * Simulates moving in a certain direction by the given column increment and row increment until
+   * that pattern is no longer a valid move. Pieces that are able to be taken are added to a
+   * list, and then that list is returned.
+   *
+   * @param curCol  current column this piece is simulated to be on
+   * @param curRow  current row this piece is simulated to be on
+   * @param colIncr how many columns this piece will move
+   * @param rowIncr how many rows this piece will move
+   * @param board   the board we are checking
+   * @return a list of all pieces that can be taken by following this movement pattern
+   */
+  protected List<IPiece> simulateAttacks(int curCol, int curRow, int colIncr, int rowIncr,
+                                         IBoard board) {
+    List<IPiece> result = new ArrayList<IPiece>();
+    while (board.validCoordinates(curCol, curRow) && this.validMove(curCol, curRow, board)) {
+      IPiece target = board.getPieceAt(curCol, curRow);
+      if ((target != null) && (target.getTeam() != this.team)) {
+        result.add(target);
+      }
+      curCol += colIncr;
+      curRow += rowIncr;
+    }
+    return result;
+  }
+
   @Override
   public int getCol() {
     return this.col;
@@ -135,5 +174,20 @@ public abstract class APiece implements IPiece {
   @Override
   public PieceType getType() {
     return this.type;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof APiece)) {
+      return false;
+    }
+    APiece that = (APiece) obj;
+    return this.team == that.team && this.type == that.type && this.col == that.col && this.row ==
+            that.row;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.type, this.team, this.col, this.row);
   }
 }

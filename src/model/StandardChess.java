@@ -8,6 +8,11 @@ import model.players.IPlayer;
  * Created by danielchu on 12/30/16.
  */
 
+// TODO implement castling
+// TODO implement check, checkmate
+// TODO implement stalemate or win conditions
+// TODO maybe implement undo last move
+
 /**
  * Standard chess game.
  */
@@ -31,8 +36,8 @@ public class StandardChess extends AChessGame {
     int p1row = 1;
     int p2row = 6;
     for (int col = 0; col < this.board.getWidth(); col++) {
-      this.board.addPiece(new Pawn(p1.getTeam(), col, p1row, true), col, p1row);
-      this.board.addPiece(new Pawn(p2.getTeam(), col, p2row, false), col, p2row);
+      this.board.addPiece(new Pawn(p1.getTeam(), col, p1row), col, p1row);
+      this.board.addPiece(new Pawn(p2.getTeam(), col, p2row), col, p2row);
     }
     p1row = 0;
     p2row = 7;

@@ -4,6 +4,9 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.board.IBoard;
 import model.players.Team;
 
@@ -31,10 +34,14 @@ public class Pawn extends APiece {
    * @param col  the column this piece will be at
    * @param row  the row this piece will be at
    */
-  public Pawn(Team team, int col, int row, boolean upIsForward) {
+  public Pawn(Team team, int col, int row) {
     super(team, col, row, PieceType.PAWN);
     this.hasMoved = false;
-    this.upIsForward = upIsForward;
+    if(team == Team.ONE) {
+      this.upIsForward = true;
+    } else {
+      this.upIsForward = false;
+    }
   }
 
   @Override
@@ -90,5 +97,12 @@ public class Pawn extends APiece {
   public void moveTo(int targetCol, int targetRow) {
     super.moveTo(targetCol, targetRow);
     this.hasMoved = true;
+  }
+
+  @Override
+  public List<IPiece> canTakeThese(IBoard board) {
+    //TODO implement this
+    List<IPiece> result = new ArrayList<IPiece>();
+    return result;
   }
 }

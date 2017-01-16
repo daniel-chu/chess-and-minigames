@@ -4,6 +4,9 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.board.IBoard;
 import model.players.Team;
 
@@ -43,5 +46,12 @@ public class Knight extends APiece {
   protected boolean pathFree(int targetCol, int targetRow, IBoard board) {
     // Knights hop over pieces, no need to check path
     return true;
+  }
+
+  @Override
+  public List<IPiece> canTakeThese(IBoard board) {
+    //TODO implement this
+    List<IPiece> result = new ArrayList<IPiece>();
+    return result;
   }
 }

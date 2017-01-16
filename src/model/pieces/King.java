@@ -1,5 +1,8 @@
 package model.pieces;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.board.IBoard;
 import model.players.Team;
 
@@ -47,5 +50,12 @@ public class King extends APiece {
   public void moveTo(int targetCol, int targetRow) {
     super.moveTo(targetCol, targetRow);
     this.hasMoved = true;
+  }
+
+  @Override
+  public List<IPiece> canTakeThese(IBoard board) {
+    //TODO implement this
+    List<IPiece> result = new ArrayList<IPiece>();
+    return result;
   }
 }

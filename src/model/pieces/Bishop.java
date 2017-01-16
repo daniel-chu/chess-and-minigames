@@ -1,5 +1,8 @@
 package model.pieces;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.board.IBoard;
 import model.players.Team;
 
@@ -37,6 +40,13 @@ public class Bishop extends APiece {
       return false;
     }
     return super.pathFree(targetCol, targetRow, board);
+  }
+
+  @Override
+  public List<IPiece> canTakeThese(IBoard board) {
+    //TODO implement this
+    List<IPiece> result = new ArrayList<IPiece>();
+    return result;
   }
 
 }
