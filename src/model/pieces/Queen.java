@@ -4,7 +4,8 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
-// TODO implement valid move check
+import java.util.ArrayList;
+import java.util.List;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -36,5 +37,27 @@ public class Queen extends APiece {
       return false;
     }
     return super.pathFree(targetCol, targetRow, board);
+  }
+
+  @Override
+  public List<IPiece> canTakeThese(IBoard board) {
+    List<IPiece> result = new ArrayList<IPiece>();
+    // traverses left
+    result.addAll(super.simulateAttacks(this.col - 1, this.row, -1, 0, board));
+    // traverses right
+    result.addAll(super.simulateAttacks(this.col + 1, this.row, 1, 0, board));
+    // traverses up
+    result.addAll(super.simulateAttacks(this.col, this.row + 1, 0, 1, board));
+    // traverses down
+    result.addAll(super.simulateAttacks(this.col, this.row - 1, 0, -1, board));
+    // traverses diagonal up/left
+    result.addAll(super.simulateAttacks(this.col - 1, this.row - 1, -1, -1, board));
+    // traverses diagonal up/right
+    result.addAll(super.simulateAttacks(this.col + 1, this.row - 1, 1, -1, board));
+    // traverses diagonal down/left
+    result.addAll(super.simulateAttacks(this.col - 1, this.row + 1, -1, 1, board));
+    // traverses diagonal down/right
+    result.addAll(super.simulateAttacks(this.col + 1, this.row + 1, 1, 1, board));
+    return result;
   }
 }

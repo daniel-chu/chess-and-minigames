@@ -26,11 +26,11 @@ public class BoardTests {
   @Before
   public void setUp() throws Exception {
     board1 = new StandardBoard();
-    t1pawn1 = new Pawn(Team.ONE, 1, 4, true);
-    t1pawn2 = new Pawn(Team.ONE, 2, 4, true);
+    t1pawn1 = new Pawn(Team.ONE, 1, 4);
+    t1pawn2 = new Pawn(Team.ONE, 2, 4);
     t1knight1 = new Knight(Team.ONE, 3, 5);
     t1king1 = new King(Team.ONE, 1, 5);
-    t2pawn1 = new Pawn(Team.TWO, 6, 5, false);
+    t2pawn1 = new Pawn(Team.TWO, 6, 5);
     t2bishop1 = new Bishop(Team.TWO, 4, 2);
     t2queen1 = new Queen(Team.TWO, 5, 4);
     t2rook1 = new Rook(Team.TWO, 6, 3);

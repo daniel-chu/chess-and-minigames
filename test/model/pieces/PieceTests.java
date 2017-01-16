@@ -27,8 +27,8 @@ public class PieceTests {
   @Before
   public void setUp() throws Exception {
     board = new StandardBoard();
-    t1pawn = new Pawn(Team.ONE, 1, 4, true);
-    t1pawnCopy = new Pawn(Team.ONE, 1, 4, true);
+    t1pawn = new Pawn(Team.ONE, 1, 4);
+    t1pawnCopy = new Pawn(Team.ONE, 1, 4);
     t1knight = new Knight(Team.ONE, 3, 5);
     t1king = new King(Team.ONE, 1, 5);
     t2bishop = new Bishop(Team.TWO, 4, 3);
