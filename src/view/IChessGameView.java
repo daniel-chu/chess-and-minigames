@@ -24,4 +24,5 @@ public interface IChessGameView {
    * Updates/renders the board.
    */
   void update();
+
 }

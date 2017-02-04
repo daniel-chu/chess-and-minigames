@@ -15,12 +15,22 @@ public class MainView extends JFrame implements IGuiView {
   /**
    * Panel that holds the rendering of the board.
    */
-  GamePanel boardPanel;
+  private GamePanel boardPanel;
 
   /**
-   * The current player
+   * Panel that holds the text input with moves.
    */
-  int currentPlayer;
+  private JPanel inputPanel;
+
+  /**
+   * The current player.
+   */
+  private int currentPlayer;
+
+  /**
+   * The input field.
+   */
+  private JTextField inputField;
 
   public MainView() {
     super();
@@ -29,8 +39,21 @@ public class MainView extends JFrame implements IGuiView {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(true);
     this.boardPanel = new GamePanel();
+    this.inputPanel = this.createInputPanel();
 
     this.add(boardPanel, BorderLayout.CENTER);
+    this.add(inputPanel, BorderLayout.SOUTH);
+  }
+
+  private JPanel createInputPanel() {
+    JPanel panel = new JPanel();
+    JLabel label = new JLabel("Input move: ");
+    JTextField inputField = new JTextField();
+    inputField.setPreferredSize(new Dimension(200, 25));
+    this.inputField = inputField;
+    panel.add(label);
+    panel.add(inputField);
+    return panel;
   }
 
   @Override
@@ -49,4 +72,29 @@ public class MainView extends JFrame implements IGuiView {
   public void update() {
     this.boardPanel.repaint();
   }
+
+  @Override
+  public String getMoveString() {
+    return this.inputField.getText();
+  }
+
+  @Override
+  public void addButtonsAndListeners(IViewButtonListeners buttonListeners) {
+    JButton moveButton = new JButton("Move");
+    moveButton.addActionListener(buttonListeners.getMoveListener());
+    this.inputField.addActionListener(buttonListeners.getMoveListener());
+    this.inputPanel.add(moveButton);
+  }
+
+  @Override
+  public void clearInputString() {
+    this.inputField.setText("");
+  }
+
+  //TODO get this working
+  @Override
+  public void updateModelDependentAttributes() {
+    this.inputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
+  }
+
 }

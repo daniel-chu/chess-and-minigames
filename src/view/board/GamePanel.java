@@ -19,7 +19,9 @@ import view.board.pieceimagemaps.StandardWhitePieces;
  */
 public class GamePanel extends JPanel {
 
-  public static final int CELL_SIZE = 75;
+  public static final int CELL_SIZE = 60;
+
+  public static final int LABEL_OFFSET = CELL_SIZE / 3;
 
   public static final Color BROWN = new Color(170, 105, 25);
 
@@ -53,6 +55,8 @@ public class GamePanel extends JPanel {
       width = this.board.length * CELL_SIZE;
       height = this.board[0].length * CELL_SIZE;
     }
+    width += LABEL_OFFSET * 2;
+    height += LABEL_OFFSET * 2;
     return new Dimension(width, height);
   }
 
@@ -61,6 +65,23 @@ public class GamePanel extends JPanel {
     super.paintComponent(g);
     paintBoard(g);
     paintPieces(g);
+    paintLabels(g);
+  }
+
+  private void paintLabels(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g;
+    g2.setColor(Color.BLACK);
+    for (int i = 65; i < 73; i++) {
+      g2.drawString(Character.toString((char) i), ((i - 65) * CELL_SIZE) + LABEL_OFFSET +
+              CELL_SIZE / 2 - 5, LABEL_OFFSET * 2 / 3);
+      g2.drawString(Character.toString((char) i), ((i - 65) * CELL_SIZE) + LABEL_OFFSET +
+              CELL_SIZE / 2 - 5, (this.board[0].length * CELL_SIZE) + LABEL_OFFSET * 3 / 2 + 5);
+    }
+    for (int i = 8; i > 0; i--) {
+      g2.drawString(Integer.toString(i), LABEL_OFFSET / 3, (9 - i) * CELL_SIZE - 5);
+      g2.drawString(Integer.toString(i), (this.board.length * CELL_SIZE) + LABEL_OFFSET * 3 / 2 - 5,
+              (9 - i) * CELL_SIZE - 5);
+    }
   }
 
   /**
@@ -73,13 +94,15 @@ public class GamePanel extends JPanel {
       int maxRow = this.board[0].length - 1;
       for (int curRow = 0; curRow < board[0].length; curRow++) {
         for (int curCol = curRow % 2; curCol < board.length; curCol += 2) {
-          g2.fillRect((maxRow - curRow) * CELL_SIZE, curCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+          g2.fillRect(((maxRow - curRow) * CELL_SIZE) + LABEL_OFFSET, (curCol * CELL_SIZE) +
+                  LABEL_OFFSET, CELL_SIZE, CELL_SIZE);
         }
       }
       g2.setColor(DARK_BROWN);
       for (int curRow = 0; curRow < board[0].length; curRow++) {
         for (int curCol = (curRow + 1) % 2; curCol < board.length; curCol += 2) {
-          g2.fillRect((maxRow - curRow) * CELL_SIZE, curCol * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+          g2.fillRect(((maxRow - curRow) * CELL_SIZE) + LABEL_OFFSET, (curCol * CELL_SIZE) +
+                  LABEL_OFFSET, CELL_SIZE, CELL_SIZE);
         }
       }
     }
@@ -97,14 +120,25 @@ public class GamePanel extends JPanel {
           PieceInfo piece = this.board[col][row];
           if (piece.getTeam() == Team.ONE) {
             ImageIcon pieceImage = this.whitePieceImages.getImage(piece.getType());
-            pieceImage.paintIcon(this, g, col * CELL_SIZE, (maxRow - row) * CELL_SIZE);
+            pieceImage.paintIcon(this, g, (col * CELL_SIZE) + LABEL_OFFSET, ((maxRow - row) *
+                    CELL_SIZE) + LABEL_OFFSET);
           } else if (piece.getTeam() == Team.TWO) {
             ImageIcon pieceImage = this.blackPieceImages.getImage(piece.getType());
-            pieceImage.paintIcon(this, g, col * CELL_SIZE, (maxRow - row) * CELL_SIZE);
+            pieceImage.paintIcon(this, g, (col * CELL_SIZE) + LABEL_OFFSET, ((maxRow - row) *
+                    CELL_SIZE) + LABEL_OFFSET);
           }
         }
       }
     }
+  }
+
+  /**
+   * Gets how wide the board is in pixels.
+   *
+   * @return the width of the board in pixels.
+   */
+  public int getBoardWidth() {
+    return board.length * CELL_SIZE;
   }
 
 }
