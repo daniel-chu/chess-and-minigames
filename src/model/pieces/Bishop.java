@@ -44,8 +44,15 @@ public class Bishop extends APiece {
 
   @Override
   public List<IPiece> canTakeThese(IBoard board) {
-    //TODO implement this
     List<IPiece> result = new ArrayList<IPiece>();
+    // up+left
+    result.addAll(super.simulateAttacks(this.col - 1, this.row - 1, -1, -1, board));
+    // up+right
+    result.addAll(super.simulateAttacks(this.col + 1, this.row - 1, 1, -1, board));
+    // down+left
+    result.addAll(super.simulateAttacks(this.col - 1, this.row + 1, -1, 1, board));
+    // down+right
+    result.addAll(super.simulateAttacks(this.col + 1, this.row + 1, 1, 1, board));
     return result;
   }
 
