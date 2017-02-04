@@ -26,7 +26,6 @@ public class Pawn extends APiece {
    */
   protected boolean upIsForward;
 
-
   /**
    * Constructor for a Pawn piece.
    *
@@ -37,7 +36,7 @@ public class Pawn extends APiece {
   public Pawn(Team team, int col, int row) {
     super(team, col, row, PieceType.PAWN);
     this.hasMoved = false;
-    if(team == Team.ONE) {
+    if (team == Team.ONE) {
       this.upIsForward = true;
     } else {
       this.upIsForward = false;

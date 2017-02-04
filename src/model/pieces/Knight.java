@@ -50,8 +50,43 @@ public class Knight extends APiece {
 
   @Override
   public List<IPiece> canTakeThese(IBoard board) {
-    //TODO implement this
     List<IPiece> result = new ArrayList<IPiece>();
+    // up + left
+    int targetCol = this.col - 1;
+    int targetRow = this.row - 2;
+    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
+      IPiece target = board.getPieceAt(targetCol, targetRow);
+      if ((target != null) && (target.getTeam() != this.team)) {
+        result.add(target);
+      }
+    }
+    // up + right
+    targetCol = this.col + 1;
+    targetRow = this.row - 2;
+    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
+      IPiece target = board.getPieceAt(targetCol, targetRow);
+      if ((target != null) && (target.getTeam() != this.team)) {
+        result.add(target);
+      }
+    }
+    // down + left
+    targetCol = this.col - 1;
+    targetRow = this.row + 2;
+    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
+      IPiece target = board.getPieceAt(targetCol, targetRow);
+      if ((target != null) && (target.getTeam() != this.team)) {
+        result.add(target);
+      }
+    }
+    // down + right
+    targetCol = this.col + 1;
+    targetRow = this.row + 2;
+    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
+      IPiece target = board.getPieceAt(targetCol, targetRow);
+      if ((target != null) && (target.getTeam() != this.team)) {
+        result.add(target);
+      }
+    }
     return result;
   }
 }

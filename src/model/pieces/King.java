@@ -42,7 +42,9 @@ public class King extends APiece {
     if (distCol > 1 || distRow > 1 || (distCol == 0 && distRow == 0)) {
       return false;
     }
-    // TODO implement check for if King will be in Check
+    if(this.willBeInCheck(targetCol, targetRow, board)) {
+      return false;
+    }
     return super.pathFree(targetCol, targetRow, board);
   }
 
@@ -54,8 +56,30 @@ public class King extends APiece {
 
   @Override
   public List<IPiece> canTakeThese(IBoard board) {
-    //TODO implement this
     List<IPiece> result = new ArrayList<IPiece>();
+    // up
+    super.simulateAttacks(this.col, this.row - 1, 0, -1, board);
+    // down
+    super.simulateAttacks(this.col, this.row + 1, 0, 1, board);
+    // left
+    super.simulateAttacks(this.col - 1, this.row, -1, 0, board);
+    // right
+    super.simulateAttacks(this.col + 1, this.row, 1, 0, board);
+    return result;
+  }
+
+  public boolean willBeInCheck(int targetCol, int targetRow, IBoard board) {
+    // TODO implement check for if King will be in Check
+    return false;
+  }
+
+  private List<IPiece> filterGuardedPieces(List<IPiece> allPieces, IBoard board) {
+    List<IPiece> result = new ArrayList<IPiece>();
+    for(IPiece piece : allPieces) {
+      if(!this.willBeInCheck(piece.getCol(), piece.getRow(), board)) {
+        result.add(piece);
+      }
+    }
     return result;
   }
 }
