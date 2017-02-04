@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.swing.*;
 
 import model.pieces.PieceType;
+import view.board.GamePanel;
 
 /**
  * Created by danielchu on 1/15/17.
@@ -23,12 +24,26 @@ public class StandardWhitePieces implements IPieceImageMaps {
    */
   public StandardWhitePieces() {
     this.pieceMap = new HashMap<PieceType, ImageIcon>();
-    this.pieceMap.put(PieceType.PAWN, new ImageIcon("resources/pieceSprites/whitepawn.png"));
-    this.pieceMap.put(PieceType.ROOK, new ImageIcon("resources/pieceSprites/whiterook.png"));
-    this.pieceMap.put(PieceType.KNIGHT, new ImageIcon("resources/pieceSprites/whiteknight.png"));
-    this.pieceMap.put(PieceType.BISHOP, new ImageIcon("resources/pieceSprites/whitebishop.png"));
-    this.pieceMap.put(PieceType.QUEEN, new ImageIcon("resources/pieceSprites/whitequeen.png"));
-    this.pieceMap.put(PieceType.KING, new ImageIcon("resources/pieceSprites/whiteking.png"));
+    this.pieceMap.put(PieceType.PAWN, getAndScaleImage("resources/pieceSprites/whitepawn.png"));
+    this.pieceMap.put(PieceType.ROOK, getAndScaleImage("resources/pieceSprites/whiterook.png"));
+    this.pieceMap.put(PieceType.KNIGHT, getAndScaleImage("resources/pieceSprites/whiteknight.png"));
+    this.pieceMap.put(PieceType.BISHOP, getAndScaleImage("resources/pieceSprites/whitebishop.png"));
+    this.pieceMap.put(PieceType.QUEEN, getAndScaleImage("resources/pieceSprites/whitequeen.png"));
+    this.pieceMap.put(PieceType.KING, getAndScaleImage("resources/pieceSprites/whiteking.png"));
+  }
+
+  /**
+   * Gets an image icon from the file path, and scales it to the correct size.
+   *
+   * @param filePath the fiel path the image icon is at
+   * @return the scaled image icon
+   */
+  private ImageIcon getAndScaleImage(String filePath) {
+    ImageIcon orig = new ImageIcon(filePath);
+    Image scaledImage = orig.getImage().getScaledInstance(GamePanel.CELL_SIZE, GamePanel
+            .CELL_SIZE, Image.SCALE_SMOOTH);
+    ImageIcon result = new ImageIcon(scaledImage);
+    return result;
   }
 
   /**
