@@ -51,7 +51,6 @@ public class MainView extends JFrame implements IGuiView {
     JPanel panel = new JPanel();
     JLabel label = new JLabel("Input move: ");
     JTextField inputField = new JTextField();
-    inputField.setPreferredSize(new Dimension(200, 25));
     this.inputField = inputField;
     panel.add(label);
     panel.add(inputField);
@@ -97,8 +96,8 @@ public class MainView extends JFrame implements IGuiView {
   @Override
   public void updateModelDependentAttributes() {
     this.inputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
-    this.update();
-  }
+    this.inputField.revalidate();
+}
 
   @Override
   public void addKeyListenerToComponents(KeyHandler keyHandler) {

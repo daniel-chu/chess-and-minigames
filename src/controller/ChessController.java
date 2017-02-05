@@ -78,6 +78,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
   public KeyHandler createKeyHandler() {
     KeyHandler result = new KeyHandler();
     result.addKeyPressed(KeyEvent.VK_R, () -> {
+      this.view.resetFocus();
       this.model.restartGame();
       this.updateView();
     });

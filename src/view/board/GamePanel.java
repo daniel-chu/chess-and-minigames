@@ -19,7 +19,7 @@ import view.board.pieceimagemaps.StandardWhitePieces;
  */
 public class GamePanel extends JPanel {
 
-  public static final int CELL_SIZE = 60;
+  public static final int CELL_SIZE = 65;
 
   public static final int LABEL_OFFSET = CELL_SIZE / 3;
 
