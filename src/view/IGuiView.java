@@ -1,5 +1,8 @@
 package view;
 
+import controller.handlers.KeyHandler;
+import controller.handlers.MouseHandler;
+
 /**
  * Created by danielchu on 1/15/17.
  */
@@ -29,4 +32,23 @@ public interface IGuiView extends IChessGameView {
    * Updates attributes that depend on the board (for ex. text field width).
    */
   void updateModelDependentAttributes();
+
+  /**
+   * Adds the key listener to the necessary components.
+   *
+   * @param keyHandler the keyhandler we are adding
+   */
+  void addKeyListenerToComponents(KeyHandler keyHandler);
+
+  /**
+   * Adds the mouse listener to the necessary components.
+   *
+   * @param mouseHandler the mouse handler we are adding
+   */
+  void addMouseListenerToComponents(MouseHandler mouseHandler);
+
+  /**
+   * Resets focus on components in the view.
+   */
+  void resetFocus();
 }

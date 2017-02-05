@@ -97,4 +97,10 @@ public class StandardChess extends AChessGame {
       this.currentPlayer = p1;
     }
   }
+
+  @Override
+  public void restartGame() {
+    super.restartGame();
+    this.setupBoard();
+  }
 }

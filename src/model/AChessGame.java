@@ -100,4 +100,9 @@ public abstract class AChessGame implements IChessGameModel {
     }
     return result;
   }
+
+  @Override
+  public void restartGame() {
+    this.currentPlayer = p1;
+  }
 }

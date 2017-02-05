@@ -4,6 +4,8 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import controller.handlers.KeyHandler;
+import controller.handlers.MouseHandler;
 import model.pieces.PieceInfo;
 import view.board.GamePanel;
 
@@ -95,6 +97,24 @@ public class MainView extends JFrame implements IGuiView {
   @Override
   public void updateModelDependentAttributes() {
     this.inputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
+    this.update();
+  }
+
+  @Override
+  public void addKeyListenerToComponents(KeyHandler keyHandler) {
+    this.addKeyListener(keyHandler);
+    this.boardPanel.addKeyListener(keyHandler);
+  }
+
+  @Override
+  public void addMouseListenerToComponents(MouseHandler mouseHandler) {
+    this.addMouseListener(mouseHandler);
+  }
+
+  @Override
+  public void resetFocus() {
+    this.setFocusable(true);
+    this.requestFocus();
   }
 
 }

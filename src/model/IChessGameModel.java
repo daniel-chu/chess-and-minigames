@@ -48,4 +48,9 @@ public interface IChessGameModel {
    * @return the 2d array representing this game
    */
   PieceInfo[][] getBoard();
+
+  /**
+   * Restarts the game.
+   */
+  void restartGame();
 }

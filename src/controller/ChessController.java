@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -37,16 +38,24 @@ public class ChessController implements IChessController, IViewButtonListeners {
   private MouseHandler mouseHandler;
 
   /**
+   * The key handler for the chess game.
+   */
+  private KeyHandler keyHandler;
+
+  /**
    * Constructor for the controller.
    *
    * @param model The model we are using
-   * @param view The view we are using
+   * @param view  The view we are using
    */
   public ChessController(IChessGameModel model, IGuiView view) {
     this.model = model;
     this.view = view;
     this.mouseHandler = this.createMouseHandler();
+    this.keyHandler = this.createKeyHandler();
     this.view.addButtonsAndListeners(this);
+    this.view.addKeyListenerToComponents(keyHandler);
+    this.view.addMouseListenerToComponents(mouseHandler);
     this.updateView();
     this.view.updateModelDependentAttributes();
   }
@@ -57,16 +66,21 @@ public class ChessController implements IChessController, IViewButtonListeners {
   }
 
   public MouseHandler createMouseHandler() {
+    //TODO implement mouse controls
     MouseHandler result = new MouseHandler();
     // adds in a mouse clicked event for when the user clicks on the panel
     result.addMouseClicked(MouseEvent.BUTTON1, () -> {
-      // TODO implement mouse controls
+      this.view.resetFocus();
     });
     return result;
   }
 
   public KeyHandler createKeyHandler() {
     KeyHandler result = new KeyHandler();
+    result.addKeyPressed(KeyEvent.VK_R, () -> {
+      this.model.restartGame();
+      this.updateView();
+    });
     // TODO implement keyboard controls
     return result;
   }
@@ -98,6 +112,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
         this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
         this.view.setBoard(model.getBoard(), model.whosTurn());
         this.view.update();
+        this.updateGameStatus();
       } catch (NoSuchElementException err) {
         System.out.println("Invalid input");
       } catch (IllegalArgumentException err2) {
@@ -105,6 +120,18 @@ public class ChessController implements IChessController, IViewButtonListeners {
       }
     };
     return move;
+  }
+
+  /**
+   * Updates the game status, such as whos turn it is (for the view), if someone won the game, etc.
+   */
+  private void updateGameStatus() {
+    int winnerCode = this.model.isGameOver();
+    if (winnerCode == 1) {
+      //TODO player one wins
+    } else if (winnerCode == 2) {
+      //TODO player two wins
+    }
   }
 
   /**
