@@ -51,4 +51,12 @@ public interface IGuiView extends IChessGameView {
    * Resets focus on components in the view.
    */
   void resetFocus();
+
+  /**
+   * Displays a win screen and allows user to restart the game.
+   *
+   * @param s         String containing which player has won.
+   * @param listeners instance of IViewButtonListeners containing listeners needed
+   */
+  void winScreen(String s, IViewButtonListeners listeners);
 }

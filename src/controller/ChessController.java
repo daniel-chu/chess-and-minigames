@@ -78,9 +78,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
   public KeyHandler createKeyHandler() {
     KeyHandler result = new KeyHandler();
     result.addKeyPressed(KeyEvent.VK_R, () -> {
-      this.view.resetFocus();
-      this.model.restartGame();
-      this.updateView();
+      this.restartGame();
     });
     // TODO implement keyboard controls
     return result;
@@ -115,12 +113,22 @@ public class ChessController implements IChessController, IViewButtonListeners {
         this.view.update();
         this.updateGameStatus();
       } catch (NoSuchElementException err) {
-        System.out.println("Invalid input");
-      } catch (IllegalArgumentException err2) {
-        System.out.println("Invalid move");
+        System.out.println("Invalid Input!");
+      } catch (NumberFormatException err2) {
+        System.out.println("Invalid Input!");
+      } catch (IllegalArgumentException err3) {
+        System.out.println(err3.getMessage());
       }
     };
     return move;
+  }
+
+  @Override
+  public ActionListener getRestartListener() {
+    ActionListener restart = (ActionEvent e) -> {
+      this.restartGame();
+    };
+    return restart;
   }
 
   /**
@@ -129,10 +137,11 @@ public class ChessController implements IChessController, IViewButtonListeners {
   private void updateGameStatus() {
     int winnerCode = this.model.isGameOver();
     if (winnerCode == 1) {
-      //TODO player one wins
+      this.view.winScreen("Player 1", this);
     } else if (winnerCode == 2) {
-      //TODO player two wins
+      this.view.winScreen("Player 2", this);
     }
+    // TODO display whos turn it is
   }
 
   /**
@@ -148,5 +157,14 @@ public class ChessController implements IChessController, IViewButtonListeners {
       throw new IllegalArgumentException("Invalid column.");
     }
     return code;
+  }
+
+  /**
+   * Method to restart the game, abstracted here for reuse.
+   */
+  private void restartGame() {
+    this.view.resetFocus();
+    this.model.restartGame();
+    this.updateView();
   }
 }

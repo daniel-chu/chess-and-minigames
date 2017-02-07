@@ -44,8 +44,6 @@ public class GamePanel extends JPanel {
   public void setBoard(PieceInfo[][] board) {
     this.board = board;
     this.setPreferredSize(this.findSizes());
-    this.revalidate();
-    this.invalidate();
   }
 
   public Dimension findSizes() {

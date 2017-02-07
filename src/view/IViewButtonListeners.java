@@ -11,4 +11,10 @@ public interface IViewButtonListeners {
    * Gets the action listener for the move button.
    */
   ActionListener getMoveListener();
+
+  /**
+   * Gets the action listener for a restart button.
+   */
+  ActionListener getRestartListener();
+
 }
