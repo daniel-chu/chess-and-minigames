@@ -1,4 +1,3 @@
-import controller.BasicController;
 import controller.ChessController;
 import controller.IChessController;
 import model.IChessGameModel;
@@ -7,10 +6,8 @@ import model.players.HumanPlayer;
 import model.players.IPlayer;
 import model.players.Team;
 import model.StandardChess;
-import view.ConsoleView;
 import view.IGuiView;
 import view.MainView;
-import view.IChessGameView;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -18,7 +15,6 @@ import view.IChessGameView;
 public class ChessRunner {
 
   public static void main(String[] args) {
-    IChessGameView consoleView = new ConsoleView();
     IGuiView guiView = new MainView();
 
     IPlayer player1 = new HumanPlayer(Team.ONE);
@@ -26,10 +22,8 @@ public class ChessRunner {
     IChessGameModel standardGame = new StandardChess(player1, player2);
     IChessGameModel pawnRush = new PawnRush(player1, player2);
 
-    BasicController basicController = new BasicController(standardGame, consoleView);
     IChessController regularController = new ChessController(pawnRush, guiView);
 
-//    basicController.run();
     regularController.run();
   }
 }
