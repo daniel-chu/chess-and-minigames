@@ -4,10 +4,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 
 import controller.handlers.KeyHandler;
 import controller.handlers.MouseHandler;
 import model.pieces.PieceInfo;
+import model.players.Team;
 import view.board.GamePanel;
 
 /**
@@ -28,7 +32,12 @@ public class MainView extends JFrame implements IGuiView {
   /**
    * The current player.
    */
-  private int currentPlayer;
+  private Team currentPlayer;
+
+  /**
+   * Label holding the current player
+   */
+  private JLabel curPlayerLabel;
 
   /**
    * The input field.
@@ -43,11 +52,42 @@ public class MainView extends JFrame implements IGuiView {
     this.setResizable(true);
     this.boardPanel = new GamePanel();
     this.inputPanel = this.createInputPanel();
+    this.currentPlayer = Team.ONE;
+    JPanel statusPanel = this.createStatusPanel();
 
+    this.add(statusPanel, BorderLayout.NORTH);
     this.add(boardPanel, BorderLayout.CENTER);
     this.add(inputPanel, BorderLayout.SOUTH);
+
+    this.setLocationByPlatform(true);
   }
 
+  /**
+   * Sets up the status bar which gives information about the game, such as who's turn it is.
+   *
+   * @return a JPanel representing that status bar
+   */
+  private JPanel createStatusPanel() {
+    JPanel statusPanel = new JPanel();
+
+    int statusPanelHeight = GamePanel.CELL_SIZE / 2;
+    statusPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.DARK_GRAY));
+    statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+
+    curPlayerLabel = new JLabel("Current Player: " + this.currentPlayer.getColor());
+    Border paddingBorder = BorderFactory.createEmptyBorder(5, 10, 5, 10);
+    Border labelSeparator = BorderFactory.createMatteBorder(0, 0, 0, 0, Color.DARK_GRAY);
+    curPlayerLabel.setBorder(new CompoundBorder(labelSeparator, paddingBorder));
+
+    statusPanel.add(curPlayerLabel, 0);
+    return statusPanel;
+  }
+
+  /**
+   * Sets up the input panel along the bottom of the screen, which allows users to control the game.
+   *
+   * @return the JPanel representing that bottom bar
+   */
   private JPanel createInputPanel() {
     JPanel panel = new JPanel();
     JLabel label = new JLabel("Input move: ");
@@ -64,7 +104,7 @@ public class MainView extends JFrame implements IGuiView {
   }
 
   @Override
-  public void setBoard(PieceInfo[][] board, int currentPlayer) {
+  public void setInfo(PieceInfo[][] board, Team currentPlayer) {
     this.boardPanel.setBoard(board);
     this.currentPlayer = currentPlayer;
     this.pack();
@@ -73,6 +113,7 @@ public class MainView extends JFrame implements IGuiView {
   @Override
   public void update() {
     this.boardPanel.repaint();
+    this.curPlayerLabel.setText("Current Player: " + this.currentPlayer.getColor());
   }
 
   @Override

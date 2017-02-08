@@ -6,6 +6,7 @@ package model;
 
 import model.pieces.IPiece;
 import model.pieces.PieceInfo;
+import model.players.Team;
 
 /**
  * Interface for the model for a game of chess.
@@ -37,9 +38,9 @@ public interface IChessGameModel {
   /**
    * Gets the player whose turn it currently is.
    *
-   * @return the number representing the player whose turn it is (1 or 2)
+   * @return the Team of the current player
    */
-  int whosTurn();
+  Team whosTurn();
 
   /**
    * Gets a 2d array representing the location of all pieces in this game. The first array is the

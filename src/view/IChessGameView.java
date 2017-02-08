@@ -1,6 +1,7 @@
 package view;
 
 import model.pieces.PieceInfo;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -13,12 +14,12 @@ public interface IChessGameView {
   void initialize();
 
   /**
-   * Sets the board that this view will use to render the game.
+   * Sets the information that the view needs to render the game.
    *
    * @param board         a 2d array of PieceInfos that represents the chess game's board
-   * @param currentPlayer the player who's turn it currently is
+   * @param currentPlayer the team who's turn it currently is
    */
-  void setBoard(PieceInfo[][] board, int currentPlayer);
+  void setInfo(PieceInfo[][] board, Team currentPlayer);
 
   /**
    * Updates/renders the board.

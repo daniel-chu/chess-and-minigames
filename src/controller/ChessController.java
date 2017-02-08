@@ -88,7 +88,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
    * Sets the fields of the view and updates it.
    */
   private void updateView() {
-    this.view.setBoard(this.model.getBoard(), this.model.whosTurn());
+    this.view.setInfo(this.model.getBoard(), this.model.whosTurn());
     this.view.update();
   }
 
@@ -109,7 +109,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
 
         // makes the move and updates the view
         this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
-        this.view.setBoard(model.getBoard(), model.whosTurn());
+        this.view.setInfo(model.getBoard(), model.whosTurn());
         this.view.update();
         this.updateGameStatus();
       } catch (NoSuchElementException err) {

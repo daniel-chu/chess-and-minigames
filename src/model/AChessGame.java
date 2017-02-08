@@ -5,6 +5,7 @@ import model.pieces.IPiece;
 import model.pieces.PieceInfo;
 import model.pieces.PieceType;
 import model.players.IPlayer;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/31/16.
@@ -69,6 +70,7 @@ public abstract class AChessGame implements IChessGameModel {
     IPiece takenPiece = this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
     if (takenPiece != null) {
       // process piece if needed (common to all gametypes) or split into own method if necessary
+      // TODO remove this print later on
       System.out.println("\n\n" + takenPiece.getType().getValue());
     }
     return takenPiece;
@@ -78,11 +80,8 @@ public abstract class AChessGame implements IChessGameModel {
   public abstract int isGameOver();
 
   @Override
-  public int whosTurn() {
-    if (this.currentPlayer.equals(p1)) {
-      return 1;
-    }
-    return 2;
+  public Team whosTurn() {
+    return this.currentPlayer.getTeam();
   }
 
   @Override

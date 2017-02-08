@@ -23,9 +23,9 @@ public class GamePanel extends JPanel {
 
   public static final int LABEL_OFFSET = CELL_SIZE / 3;
 
-  public static final Color BROWN = new Color(170, 105, 25);
+  public static final Color DARK_BROWN = new Color(170, 105, 25);
 
-  public static final Color DARK_BROWN = new Color(232, 180, 118);
+  public static final Color BROWN = new Color(232, 180, 118);
 
   private final IPieceImageMaps blackPieceImages = new StandardBlackPieces();
 
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel {
    */
   private void paintBoard(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
-    g2.setColor(BROWN);
+    g2.setColor(DARK_BROWN);
     if (board.length > 0) {
       int maxRow = this.board[0].length - 1;
       for (int curRow = 0; curRow < board[0].length; curRow++) {
@@ -96,7 +96,7 @@ public class GamePanel extends JPanel {
                   LABEL_OFFSET, CELL_SIZE, CELL_SIZE);
         }
       }
-      g2.setColor(DARK_BROWN);
+      g2.setColor(BROWN);
       for (int curRow = 0; curRow < board[0].length; curRow++) {
         for (int curCol = (curRow + 1) % 2; curCol < board.length; curCol += 2) {
           g2.fillRect(((maxRow - curRow) * CELL_SIZE) + LABEL_OFFSET, (curCol * CELL_SIZE) +
