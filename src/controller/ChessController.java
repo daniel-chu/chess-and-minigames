@@ -109,15 +109,16 @@ public class ChessController implements IChessController, IViewButtonListeners {
 
         // makes the move and updates the view
         this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
+        this.view.setStatusMessage("");
         this.view.setInfo(model.getBoard(), model.whosTurn());
         this.view.update();
-        this.updateGameStatus();
+        this.checkIfWin();
       } catch (NoSuchElementException err) {
-        System.out.println("Invalid Input!");
+        this.view.setStatusMessage("Invalid Input!");
       } catch (NumberFormatException err2) {
-        System.out.println("Invalid Input!");
+        this.view.setStatusMessage("Invalid Input!");
       } catch (IllegalArgumentException err3) {
-        System.out.println(err3.getMessage());
+        this.view.setStatusMessage(err3.getMessage());
       }
     };
     return move;
@@ -132,16 +133,15 @@ public class ChessController implements IChessController, IViewButtonListeners {
   }
 
   /**
-   * Updates the game status, such as whos turn it is (for the view), if someone won the game, etc.
+   * Checks if someone won the game, and tells the view to display a win screen if so.
    */
-  private void updateGameStatus() {
+  private void checkIfWin() {
     int winnerCode = this.model.isGameOver();
     if (winnerCode == 1) {
       this.view.winScreen("Player 1", this);
     } else if (winnerCode == 2) {
       this.view.winScreen("Player 2", this);
     }
-    // TODO display whos turn it is
   }
 
   /**

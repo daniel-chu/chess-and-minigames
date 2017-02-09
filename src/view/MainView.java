@@ -4,15 +4,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import controller.handlers.KeyHandler;
 import controller.handlers.MouseHandler;
 import model.pieces.PieceInfo;
 import model.players.Team;
 import view.board.GamePanel;
+
+// TODO implement error messages in status bar
 
 /**
  * Created by danielchu on 1/15/17.
@@ -44,6 +44,11 @@ public class MainView extends JFrame implements IGuiView {
    */
   private JTextField inputField;
 
+  /**
+   * The label that holds the status text that shows errors, checks, etc.
+   */
+  private JLabel statusLabel;
+
   public MainView() {
     super();
 
@@ -69,17 +74,31 @@ public class MainView extends JFrame implements IGuiView {
    */
   private JPanel createStatusPanel() {
     JPanel statusPanel = new JPanel();
+    JPanel statusLeft = new JPanel();
+    JPanel statusCenter = new JPanel();
+    JPanel statusRight = new JPanel();
+    statusLeft.setPreferredSize(new Dimension((int)(GamePanel.CELL_SIZE * 2.25), 25));
+    statusLeft.setBorder(new EmptyBorder(0, 10, 0, 0));
+    statusRight.setPreferredSize(new Dimension((int)(GamePanel.CELL_SIZE * 2.25), 25));
 
-    int statusPanelHeight = GamePanel.CELL_SIZE / 2;
-    statusPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.DARK_GRAY));
-    statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+    statusPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+    statusPanel.setLayout(new BorderLayout());
 
     curPlayerLabel = new JLabel("Current Player: " + this.currentPlayer.getColor());
-    Border paddingBorder = BorderFactory.createEmptyBorder(5, 10, 5, 10);
-    Border labelSeparator = BorderFactory.createMatteBorder(0, 0, 0, 0, Color.DARK_GRAY);
-    curPlayerLabel.setBorder(new CompoundBorder(labelSeparator, paddingBorder));
 
-    statusPanel.add(curPlayerLabel, 0);
+    statusLabel = new JLabel("");
+    statusLabel.setForeground(Color.RED);
+    Font statusLabelFont = curPlayerLabel.getFont();
+    statusLabel.setFont(new Font(statusLabelFont.getName(), statusLabelFont.getStyle(), 12));
+
+    statusLeft.add(curPlayerLabel);
+
+    statusCenter.add(statusLabel);
+
+    statusPanel.add(statusLeft, BorderLayout.WEST);
+    statusPanel.add(statusCenter, BorderLayout.CENTER);
+    statusPanel.add(statusRight, BorderLayout.EAST);
+
     return statusPanel;
   }
 
@@ -89,13 +108,15 @@ public class MainView extends JFrame implements IGuiView {
    * @return the JPanel representing that bottom bar
    */
   private JPanel createInputPanel() {
-    JPanel panel = new JPanel();
+    JPanel inputPanel = new JPanel();
+    inputPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
     JLabel label = new JLabel("Input move: ");
-    JTextField inputField = new JTextField();
-    this.inputField = inputField;
-    panel.add(label);
-    panel.add(inputField);
-    return panel;
+    inputField = new JTextField();
+
+    inputPanel.add(label);
+    inputPanel.add(inputField);
+
+    return inputPanel;
   }
 
   @Override
@@ -201,5 +222,10 @@ public class MainView extends JFrame implements IGuiView {
 
     winPopup.setLocation(winPopupX, winPopupY);
     winPopup.setVisible(true);
+  }
+
+  @Override
+  public void setStatusMessage(String message) {
+    this.statusLabel.setText(message);
   }
 }

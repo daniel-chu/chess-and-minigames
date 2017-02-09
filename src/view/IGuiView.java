@@ -59,4 +59,11 @@ public interface IGuiView extends IChessGameView {
    * @param listeners instance of IViewButtonListeners containing listeners needed
    */
   void winScreen(String s, IViewButtonListeners listeners);
+
+  /**
+   * Updates the status message to display a message.
+   *
+   * @param message the message to be displayed
+   */
+  void setStatusMessage(String message);
 }
