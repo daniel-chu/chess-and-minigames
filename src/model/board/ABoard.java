@@ -16,6 +16,9 @@ public abstract class ABoard implements IBoard {
    * Constructor for a board.
    */
   public ABoard(int colWidth, int rowHeight) {
+    if(colWidth > 24 || rowHeight > 24) {
+      throw new IllegalArgumentException("Board cannot be greater than 24 x 24");
+    }
     this.board = new IPiece[colWidth][rowHeight];
   }
 
