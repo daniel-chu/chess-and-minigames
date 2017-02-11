@@ -80,4 +80,9 @@ public interface IGuiView extends IChessGameView {
    * @param y the y coordinate of the click in pixels
    */
   void selectCell(int x, int y);
+
+  /**
+   * Reselects the selected cell.
+   */
+  void resetSelectedCell();
 }

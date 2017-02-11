@@ -75,11 +75,10 @@ public class GamePanel extends JPanel {
 
   /**
    * Highlights the selected cell
-   * @param g
    */
   private void highlightCell(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
-    if(selectedColIndex >= 0 && selectedRowIndex >= 0) {
+    if (selectedColIndex >= 0 && selectedRowIndex >= 0) {
       g.setColor(Color.RED);
       g2.drawRect(selectedColIndex * CELL_SIZE + LABEL_OFFSET, selectedRowIndex * CELL_SIZE + LABEL_OFFSET,
               CELL_SIZE, CELL_SIZE);
@@ -168,13 +167,12 @@ public class GamePanel extends JPanel {
    *
    * @param x the x coordinate of the click
    * @param y the y coordinate of the click
-   *
-   *          @return the string representing the clicked cell. Empty string if unhighlighting
+   * @return the string representing the clicked cell. Empty string if unhighlighting
    */
   public String selectOrDeselectAndGetCell(int x, int y) {
     int newCol = this.findClickedColumn(x);
     int newRow = this.findClickedRow(y);
-    if(selectedColIndex == newCol && selectedRowIndex == newRow) {
+    if (selectedColIndex == newCol && selectedRowIndex == newRow) {
       selectedColIndex = -1;
       selectedRowIndex = -1;
       this.repaint();
@@ -184,15 +182,33 @@ public class GamePanel extends JPanel {
     selectedRowIndex = newRow;
     this.repaint();
     String result = Character.toString((char) (selectedColIndex + 65))
-            + Integer.toString(8 - selectedRowIndex);
+            + Integer.toString(board[0].length - selectedRowIndex);
     return result;
   }
 
+  /**
+   * Finds the column we clicked on based on the given x coordinate.
+   *
+   * @param x the x coordinate in pixels of where the click was
+   */
   private int findClickedColumn(int x) {
     return (x - LABEL_OFFSET) / CELL_SIZE;
   }
 
+  /**
+   * Finds the row we clicked on based on the given y coordinate.
+   *
+   * @param y the y coordinate in pixels of where the click was
+   */
   private int findClickedRow(int y) {
     return (y - LABEL_OFFSET) / CELL_SIZE;
+  }
+
+  /**
+   * Resets the selected col and row.
+   */
+  public void resetSelectedColAndRow() {
+    selectedColIndex = -1;
+    selectedRowIndex = -1;
   }
 }

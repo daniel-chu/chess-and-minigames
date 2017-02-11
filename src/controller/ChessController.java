@@ -74,11 +74,19 @@ public class ChessController implements IChessController, IViewButtonListeners {
       this.view.selectCell(result.getMouseEvent().getX(), result.getMouseEvent().getY());
       String newCell = this.view.getCurrentSelected();
 
-      System.out.println(previousCell);
-      System.out.println(newCell);
-      // TODO based on previous/new cell, move piece
-
-      this.view.resetFocus();
+      if(this.model.hasPieceOnCell(previousCell)) {
+        if (!previousCell.isEmpty() && !newCell.isEmpty()) {
+          try {
+            this.makeMove(previousCell, newCell);
+          } catch (NumberFormatException err2) {
+            this.view.setStatusMessage("Invalid Input!");
+          } catch (IllegalArgumentException err3) {
+            this.view.setStatusMessage(err3.getMessage());
+          }
+          this.view.resetSelectedCell();
+        }
+        this.view.resetFocus();
+      }
     });
     return result;
   }
@@ -110,17 +118,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
       try {
         String from = scanner.next();
         String target = scanner.next();
-        int fromCol = this.parseColumnLabel(from);
-        int fromRow = Integer.parseInt(from.substring(1)) - 1;
-        int targetCol = this.parseColumnLabel(target);
-        int targetRow = Integer.parseInt(target.substring(1)) - 1;
-
-        // makes the move and updates the view
-        this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
-        this.view.setStatusMessage("");
-        this.view.setInfo(model.getBoard(), model.whosTurn());
-        this.view.update();
-        this.checkIfWin();
+        this.makeMove(from, target);
       } catch (NoSuchElementException err) {
         this.view.setStatusMessage("Invalid Input!");
       } catch (NumberFormatException err2) {
@@ -175,5 +173,22 @@ public class ChessController implements IChessController, IViewButtonListeners {
     this.model.restartGame();
     this.view.clearInputString();
     this.updateView();
+  }
+
+  /**
+   * Method to make a move using two strings, abstracted here for reuse.
+   */
+  private void makeMove(String from, String target) {
+    int fromCol = this.parseColumnLabel(from);
+    int fromRow = Integer.parseInt(from.substring(1)) - 1;
+    int targetCol = this.parseColumnLabel(target);
+    int targetRow = Integer.parseInt(target.substring(1)) - 1;
+
+    // makes the move and updates the view
+    this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
+    this.view.setStatusMessage("");
+    this.view.setInfo(model.getBoard(), model.whosTurn());
+    this.view.update();
+    this.checkIfWin();
   }
 }

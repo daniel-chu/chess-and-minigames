@@ -16,7 +16,7 @@ public abstract class ABoard implements IBoard {
    * Constructor for a board.
    */
   public ABoard(int colWidth, int rowHeight) {
-    if(colWidth > 24 || rowHeight > 24) {
+    if (colWidth > 24 || rowHeight > 24) {
       throw new IllegalArgumentException("Board cannot be greater than 24 x 24");
     }
     this.board = new IPiece[colWidth][rowHeight];
@@ -24,7 +24,7 @@ public abstract class ABoard implements IBoard {
 
   @Override
   public void addPiece(IPiece piece, int col, int row) throws IllegalArgumentException {
-    if(col >= this.getWidth() || row >= this.getHeight() || col < 0 || row < 0) {
+    if (col >= this.getWidth() || row >= this.getHeight() || col < 0 || row < 0) {
       throw new IllegalArgumentException("Invalid coordinates.");
     }
     if (this.board[col][row] == null) {
@@ -41,7 +41,12 @@ public abstract class ABoard implements IBoard {
 
   @Override
   public IPiece getPieceAt(int col, int row) {
-    return this.board[col][row];
+    try {
+      IPiece result = this.board[col][row];
+      return result;
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return null;
+    }
   }
 
   @Override

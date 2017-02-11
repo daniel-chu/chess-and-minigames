@@ -104,4 +104,21 @@ public abstract class AChessGame implements IChessGameModel {
   public void restartGame() {
     this.currentPlayer = p1;
   }
+
+  @Override
+  public boolean hasPieceOnCell(String cell) {
+    if(!cell.matches("[a-zA-Z]\\d+")) {
+      return false;
+    }
+    char col = cell.charAt(0);
+    int colIndex = (int)col - 65;
+    int rowIndex = Integer.parseInt(cell.substring(1)) - 1;
+    System.out.println(colIndex);
+    System.out.println(rowIndex);
+    IPiece piece = this.board.getPieceAt(colIndex, rowIndex);
+    if(piece == null) {
+      return false;
+    }
+    return true;
+  }
 }

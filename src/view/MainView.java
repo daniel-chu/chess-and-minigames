@@ -81,9 +81,9 @@ public class MainView extends JFrame implements IGuiView {
     JPanel statusLeft = new JPanel();
     JPanel statusCenter = new JPanel();
     JPanel statusRight = new JPanel();
-    statusLeft.setPreferredSize(new Dimension((int)(GamePanel.CELL_SIZE * 2.25), 25));
+    statusLeft.setPreferredSize(new Dimension((int) (GamePanel.CELL_SIZE * 2.25), 25));
     statusLeft.setBorder(new EmptyBorder(0, 10, 0, 0));
-    statusRight.setPreferredSize(new Dimension((int)(GamePanel.CELL_SIZE * 2.25), 25));
+    statusRight.setPreferredSize(new Dimension((int) (GamePanel.CELL_SIZE * 2.25), 25));
 
     statusPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
     statusPanel.setLayout(new BorderLayout());
@@ -241,5 +241,11 @@ public class MainView extends JFrame implements IGuiView {
   @Override
   public void selectCell(int x, int y) {
     curSelected = this.boardPanel.selectOrDeselectAndGetCell(x, y);
+  }
+
+  @Override
+  public void resetSelectedCell() {
+    curSelected = "";
+    this.boardPanel.resetSelectedColAndRow();
   }
 }

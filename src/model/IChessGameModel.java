@@ -54,4 +54,12 @@ public interface IChessGameModel {
    * Restarts the game.
    */
   void restartGame();
+
+  /**
+   * Checks if there is a piece on the given cell.
+   *
+   * @param cell the cell to check
+   * @return true if there is a piece, false otherwise
+   */
+  boolean hasPieceOnCell(String cell);
 }
