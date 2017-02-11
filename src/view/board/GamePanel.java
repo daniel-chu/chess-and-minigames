@@ -187,21 +187,35 @@ public class GamePanel extends JPanel {
   }
 
   /**
-   * Finds the column we clicked on based on the given x coordinate.
+   * Finds the column we clicked on based on the given x coordinate. If it is under the minimum,
+   * return the minimum. If it is over the max, return the max.
    *
    * @param x the x coordinate in pixels of where the click was
    */
   private int findClickedColumn(int x) {
-    return (x - LABEL_OFFSET) / CELL_SIZE;
+    int result = (x - LABEL_OFFSET) / CELL_SIZE;
+    if(result > board.length - 1) {
+      return board.length - 1;
+    } else if(result < 0) {
+      return 0;
+    }
+    return result;
   }
 
   /**
-   * Finds the row we clicked on based on the given y coordinate.
+   * Finds the row we clicked on based on the given y coordinate. If it is under the minimum,
+   * return the minimum. If it is over the max, return the max.
    *
    * @param y the y coordinate in pixels of where the click was
    */
   private int findClickedRow(int y) {
-    return (y - LABEL_OFFSET) / CELL_SIZE;
+    int result = (y - LABEL_OFFSET) / CELL_SIZE;
+    if(result > board[0].length - 1) {
+      return board[0].length - 1;
+    } else if(result < 0) {
+      return 0;
+    }
+    return result;
   }
 
   /**
