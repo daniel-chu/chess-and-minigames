@@ -69,9 +69,7 @@ public abstract class AChessGame implements IChessGameModel {
     // makes the move and stores the piece that was taken (null if none)
     IPiece takenPiece = this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
     if (takenPiece != null) {
-      // process piece if needed (common to all gametypes) or split into own method if necessary
-      // TODO remove this print later on
-      System.out.println("\n\n" + takenPiece.getType().getValue());
+      // TODO process piece if needed (common to all gametypes) or split into own method
     }
     return takenPiece;
   }
@@ -113,8 +111,6 @@ public abstract class AChessGame implements IChessGameModel {
     char col = cell.charAt(0);
     int colIndex = (int)col - 65;
     int rowIndex = Integer.parseInt(cell.substring(1)) - 1;
-    System.out.println(colIndex);
-    System.out.println(rowIndex);
     IPiece piece = this.board.getPieceAt(colIndex, rowIndex);
     if(piece == null) {
       return false;

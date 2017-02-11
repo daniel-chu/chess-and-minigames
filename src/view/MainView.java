@@ -184,12 +184,17 @@ public class MainView extends JFrame implements IGuiView {
 
   @Override
   public void winScreen(String winner, IViewButtonListeners listeners) {
+    this.setStatusMessage("Game Over!");
+    this.setEnabled(false);
     JFrame winPopup = new JFrame("GAME OVER");
     JPanel winPanel = new JPanel();
 
     JButton restart = new JButton("Restart");
     restart.addActionListener(listeners.getRestartListener());
-    restart.addActionListener((ActionEvent e) -> winPopup.dispose());
+    restart.addActionListener((ActionEvent e) -> {
+      winPopup.dispose();
+      this.setEnabled(true);
+    });
 
     JButton quit = new JButton("Quit");
     quit.addActionListener((ActionEvent e) -> {
@@ -200,6 +205,7 @@ public class MainView extends JFrame implements IGuiView {
     JLabel winText = new JLabel(winner + " won! Restart or quit?");
     winPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
+
     c.insets = new Insets(10, 20, 0, 20);
     c.gridwidth = 2;
     c.gridx = 1;
