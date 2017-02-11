@@ -31,6 +31,10 @@ public class GamePanel extends JPanel {
 
   private final IPieceImageMaps whitePieceImages = new StandardWhitePieces();
 
+  private int selectedColIndex;
+
+  private int selectedRowIndex;
+
   /**
    * The 2d array representing the game board.
    */
@@ -39,6 +43,8 @@ public class GamePanel extends JPanel {
   public GamePanel() {
     super();
     this.board = new PieceInfo[0][0];
+    this.selectedColIndex = -1;
+    this.selectedRowIndex = -1;
   }
 
   public void setBoard(PieceInfo[][] board) {
@@ -62,8 +68,25 @@ public class GamePanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     paintBoard(g);
+    highlightCell(g);
     paintPieces(g);
     paintLabels(g);
+  }
+
+  /**
+   * Highlights the selected cell
+   * @param g
+   */
+  private void highlightCell(Graphics g) {
+    Graphics2D g2 = (Graphics2D) g;
+    if(selectedColIndex >= 0 && selectedRowIndex >= 0) {
+      g.setColor(Color.RED);
+      g2.drawRect(selectedColIndex * CELL_SIZE + LABEL_OFFSET, selectedRowIndex * CELL_SIZE + LABEL_OFFSET,
+              CELL_SIZE, CELL_SIZE);
+      g.setColor(new Color(255, 0, 0, 120));
+      g2.fillRect(selectedColIndex * CELL_SIZE + LABEL_OFFSET, selectedRowIndex * CELL_SIZE + LABEL_OFFSET,
+              CELL_SIZE, CELL_SIZE);
+    }
   }
 
   private void paintLabels(Graphics g) {
@@ -139,4 +162,37 @@ public class GamePanel extends JPanel {
     return board.length * CELL_SIZE;
   }
 
+  /**
+   * Highlights (or unhighlights if already highlighted) the clicked cell, as well as returns the
+   * string representing it. If unhighlighting something, the string is empty.
+   *
+   * @param x the x coordinate of the click
+   * @param y the y coordinate of the click
+   *
+   *          @return the string representing the clicked cell. Empty string if unhighlighting
+   */
+  public String selectOrDeselectAndGetCell(int x, int y) {
+    int newCol = this.findClickedColumn(x);
+    int newRow = this.findClickedRow(y);
+    if(selectedColIndex == newCol && selectedRowIndex == newRow) {
+      selectedColIndex = -1;
+      selectedRowIndex = -1;
+      this.repaint();
+      return "";
+    }
+    selectedColIndex = newCol;
+    selectedRowIndex = newRow;
+    this.repaint();
+    String result = Character.toString((char) (selectedColIndex + 65))
+            + Integer.toString(8 - selectedRowIndex);
+    return result;
+  }
+
+  private int findClickedColumn(int x) {
+    return (x - LABEL_OFFSET) / CELL_SIZE;
+  }
+
+  private int findClickedRow(int y) {
+    return (y - LABEL_OFFSET) / CELL_SIZE;
+  }
 }

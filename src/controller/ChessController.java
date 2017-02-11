@@ -70,6 +70,14 @@ public class ChessController implements IChessController, IViewButtonListeners {
     MouseHandler result = new MouseHandler();
     // adds in a mouse clicked event for when the user clicks on the panel
     result.addMouseClicked(MouseEvent.BUTTON1, () -> {
+      String previousCell = this.view.getCurrentSelected();
+      this.view.selectCell(result.getMouseEvent().getX(), result.getMouseEvent().getY());
+      String newCell = this.view.getCurrentSelected();
+
+      System.out.println(previousCell);
+      System.out.println(newCell);
+      // TODO based on previous/new cell, move piece
+
       this.view.resetFocus();
     });
     return result;
@@ -165,6 +173,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
   private void restartGame() {
     this.view.resetFocus();
     this.model.restartGame();
+    this.view.clearInputString();
     this.updateView();
   }
 }

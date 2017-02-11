@@ -12,8 +12,6 @@ import model.pieces.PieceInfo;
 import model.players.Team;
 import view.board.GamePanel;
 
-// TODO implement error messages in status bar
-
 /**
  * Created by danielchu on 1/15/17.
  */
@@ -45,6 +43,11 @@ public class MainView extends JFrame implements IGuiView {
   private JTextField inputField;
 
   /**
+   * The currently selected cell.
+   */
+  private String curSelected;
+
+  /**
    * The label that holds the status text that shows errors, checks, etc.
    */
   private JLabel statusLabel;
@@ -58,6 +61,7 @@ public class MainView extends JFrame implements IGuiView {
     this.boardPanel = new GamePanel();
     this.inputPanel = this.createInputPanel();
     this.currentPlayer = Team.ONE;
+    this.curSelected = "";
     JPanel statusPanel = this.createStatusPanel();
 
     this.add(statusPanel, BorderLayout.NORTH);
@@ -126,15 +130,15 @@ public class MainView extends JFrame implements IGuiView {
 
   @Override
   public void setInfo(PieceInfo[][] board, Team currentPlayer) {
-    this.boardPanel.setBoard(board);
+    boardPanel.setBoard(board);
     this.currentPlayer = currentPlayer;
     this.pack();
   }
 
   @Override
   public void update() {
-    this.boardPanel.repaint();
-    this.curPlayerLabel.setText("Current Player: " + this.currentPlayer.getColor());
+    boardPanel.repaint();
+    curPlayerLabel.setText("Current Player: " + this.currentPlayer.getColor());
   }
 
   @Override
@@ -146,8 +150,8 @@ public class MainView extends JFrame implements IGuiView {
   public void addButtonsAndListeners(IViewButtonListeners buttonListeners) {
     JButton moveButton = new JButton("Move");
     moveButton.addActionListener(buttonListeners.getMoveListener());
-    this.inputField.addActionListener(buttonListeners.getMoveListener());
-    this.inputPanel.add(moveButton);
+    inputField.addActionListener(buttonListeners.getMoveListener());
+    inputPanel.add(moveButton);
   }
 
   @Override
@@ -157,19 +161,19 @@ public class MainView extends JFrame implements IGuiView {
 
   @Override
   public void updateModelDependentAttributes() {
-    this.inputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
-    this.inputField.revalidate();
+    inputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
+    inputField.revalidate();
   }
 
   @Override
   public void addKeyListenerToComponents(KeyHandler keyHandler) {
     this.addKeyListener(keyHandler);
-    this.boardPanel.addKeyListener(keyHandler);
+    boardPanel.addKeyListener(keyHandler);
   }
 
   @Override
   public void addMouseListenerToComponents(MouseHandler mouseHandler) {
-    this.addMouseListener(mouseHandler);
+    boardPanel.addMouseListener(mouseHandler);
   }
 
   @Override
@@ -227,5 +231,15 @@ public class MainView extends JFrame implements IGuiView {
   @Override
   public void setStatusMessage(String message) {
     this.statusLabel.setText(message);
+  }
+
+  @Override
+  public String getCurrentSelected() {
+    return curSelected;
+  }
+
+  @Override
+  public void selectCell(int x, int y) {
+    curSelected = this.boardPanel.selectOrDeselectAndGetCell(x, y);
   }
 }

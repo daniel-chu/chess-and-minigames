@@ -66,4 +66,18 @@ public interface IGuiView extends IChessGameView {
    * @param message the message to be displayed
    */
   void setStatusMessage(String message);
+
+  /**
+   * Gets the currently selected tile.
+   *
+   * @return the currently selected tile as a string (ex. D3)
+   */
+  String getCurrentSelected();
+
+  /**
+   * Selects a cell based on the given x and y coordinates
+   * @param x the x coordinate of the click in pixels
+   * @param y the y coordinate of the click in pixels
+   */
+  void selectCell(int x, int y);
 }
