@@ -28,15 +28,15 @@ public class Knight extends APiece {
 
   @Override
   public boolean validMove(int targetCol, int targetRow, IBoard board) {
-    if(!super.validMove(targetCol, targetRow, board)) {
+    if (!super.validMove(targetCol, targetRow, board)) {
       return false;
     }
     int distCol = Math.abs(this.col - targetCol);
     int distRow = Math.abs(this.row - targetRow);
-    if(distCol == 0 || distRow == 0) {
+    if (distCol == 0 || distRow == 0) {
       return false;
     }
-    if(distCol + distRow != 3) {
+    if (distCol + distRow != 3) {
       return false;
     }
     return true;
@@ -52,41 +52,30 @@ public class Knight extends APiece {
   public List<IPiece> canTakeThese(IBoard board) {
     List<IPiece> result = new ArrayList<IPiece>();
     // up + left
-    int targetCol = this.col - 1;
-    int targetRow = this.row - 2;
-    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
-      IPiece target = board.getPieceAt(targetCol, targetRow);
-      if ((target != null) && (target.getTeam() != this.team)) {
-        result.add(target);
-      }
-    }
+    addPieceFromJump(this.col - 1, this.row - 2, result, board);
     // up + right
-    targetCol = this.col + 1;
-    targetRow = this.row - 2;
-    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
-      IPiece target = board.getPieceAt(targetCol, targetRow);
-      if ((target != null) && (target.getTeam() != this.team)) {
-        result.add(target);
-      }
-    }
+    addPieceFromJump(this.col + 1, this.row - 2, result, board);
     // down + left
-    targetCol = this.col - 1;
-    targetRow = this.row + 2;
-    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
-      IPiece target = board.getPieceAt(targetCol, targetRow);
-      if ((target != null) && (target.getTeam() != this.team)) {
-        result.add(target);
-      }
-    }
+    addPieceFromJump(this.col - 1, this.row + 2, result, board);
     // down + right
-    targetCol = this.col + 1;
-    targetRow = this.row + 2;
-    if(board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)){
+    addPieceFromJump(this.col + 1, this.row + 2, result, board);
+    return result;
+  }
+
+  /**
+   * Adds the piece from the given target to the given list.
+   *
+   * @param targetCol the target column
+   * @param targetRow the target row
+   * @param result    the result list
+   * @param board     the board we are adding from
+   */
+  private void addPieceFromJump(int targetCol, int targetRow, List<IPiece> result, IBoard board) {
+    if (board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)) {
       IPiece target = board.getPieceAt(targetCol, targetRow);
       if ((target != null) && (target.getTeam() != this.team)) {
         result.add(target);
       }
     }
-    return result;
   }
 }
