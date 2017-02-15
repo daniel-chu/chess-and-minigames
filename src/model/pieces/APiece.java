@@ -190,4 +190,9 @@ public abstract class APiece implements IPiece {
   public int hashCode() {
     return Objects.hash(this.type, this.team, this.col, this.row);
   }
+
+  @Override
+  public String toString() {
+    return this.type.toString() + "(" + "col:" + this.col + ",row:" + this.row + ")";
+  }
 }
