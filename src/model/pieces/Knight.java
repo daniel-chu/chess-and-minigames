@@ -51,14 +51,22 @@ public class Knight extends APiece {
   @Override
   public List<IPiece> canTakeThese(IBoard board) {
     List<IPiece> result = new ArrayList<IPiece>();
-    // up + left
+    // up 1 + left 2
     addPieceFromJump(this.col - 1, this.row - 2, result, board);
-    // up + right
+    // up 1 + right 2
     addPieceFromJump(this.col + 1, this.row - 2, result, board);
-    // down + left
+    // down 1 + left 2
     addPieceFromJump(this.col - 1, this.row + 2, result, board);
-    // down + right
+    // down 1 + right 2
     addPieceFromJump(this.col + 1, this.row + 2, result, board);
+    // up 1 + left 1
+    addPieceFromJump(this.col - 2, this.row - 1, result, board);
+    // up 2 + right 1
+    addPieceFromJump(this.col + 2, this.row - 1, result, board);
+    // down 2 + left 1
+    addPieceFromJump(this.col - 2, this.row + 1, result, board);
+    // down 2 + right 1
+    addPieceFromJump(this.col + 2, this.row + 1, result, board);
     return result;
   }
 
