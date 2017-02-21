@@ -4,8 +4,8 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -22,7 +22,7 @@ public class Pawn extends APiece {
   protected boolean hasMoved;
 
   /**
-   * If pawn's forward direction is up (as in moving from row 1 -> 2 -> 3, etc.)
+   * If pawn's forward direction is up (as in moving from row 1 -> 2 -> 3, etc.) or incrementing
    */
   protected boolean upIsForward;
 
@@ -99,9 +99,9 @@ public class Pawn extends APiece {
   }
 
   @Override
-  public List<IPiece> canTakeThese(IBoard board) {
+  public Set<IPiece> canTakeThese(IBoard board) {
     //TODO implement this
-    List<IPiece> result = new ArrayList<IPiece>();
+    Set<IPiece> result = new HashSet<IPiece>();
     return result;
   }
 }

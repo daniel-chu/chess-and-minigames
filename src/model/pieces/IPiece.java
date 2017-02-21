@@ -1,6 +1,7 @@
 package model.pieces;
 
 import java.util.List;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -38,7 +39,7 @@ public interface IPiece {
    * @param board the board we are checking
    * @return a list of pieces that are capable of taking this piece
    */
-  List<IPiece> canBeTakenBy(IBoard board);
+  Set<IPiece> canBeTakenBy(IBoard board);
 
   /**
    * Gives a list of enemy pieces that this piece is able to take in one move.
@@ -46,7 +47,7 @@ public interface IPiece {
    * @param board the board we are checking
    * @return a list of pieces that this piece can take
    */
-  List<IPiece> canTakeThese(IBoard board);
+  Set<IPiece> canTakeThese(IBoard board);
 
   /**
    * Gets the column this piece is in.

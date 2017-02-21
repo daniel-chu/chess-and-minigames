@@ -1,7 +1,7 @@
 package model.pieces;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -55,8 +55,8 @@ public class King extends APiece {
   }
 
   @Override
-  public List<IPiece> canTakeThese(IBoard board) {
-    List<IPiece> result = new ArrayList<IPiece>();
+  public Set<IPiece> canTakeThese(IBoard board) {
+    Set<IPiece> result = new HashSet<IPiece>();
     // up
     super.simulateAttacks(this.col, this.row - 1, 0, -1, board);
     // down
@@ -73,8 +73,8 @@ public class King extends APiece {
     return false;
   }
 
-  private List<IPiece> filterGuardedPieces(List<IPiece> allPieces, IBoard board) {
-    List<IPiece> result = new ArrayList<IPiece>();
+  private Set<IPiece> filterGuardedPieces(Set<IPiece> allPieces, IBoard board) {
+    Set<IPiece> result = new HashSet<IPiece>();
     for(IPiece piece : allPieces) {
       if(!this.willBeInCheck(piece.getCol(), piece.getRow(), board)) {
         result.add(piece);

@@ -3,9 +3,8 @@ package model.pieces;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.board.StandardBoard;
@@ -73,10 +72,10 @@ public class BishopTest {
 
   @Test
   public void canTakeThese() throws Exception {
-    List<IPiece> takeablePieces = new ArrayList<IPiece>();
+    Set<IPiece> takeablePieces = new HashSet<IPiece>();
     takeablePieces.add(pawnc0r5);
     takeablePieces.add(pawnc3r2);
     takeablePieces.add(pawnc3r4);
-    assertEquals(new HashSet(takeablePieces), new HashSet(bishop.canTakeThese(standardBoard)));
+    assertEquals(takeablePieces, bishop.canTakeThese(standardBoard));
   }
 }

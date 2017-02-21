@@ -1,7 +1,7 @@
 package model.pieces;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -43,8 +43,8 @@ public class Bishop extends APiece {
   }
 
   @Override
-  public List<IPiece> canTakeThese(IBoard board) {
-    List<IPiece> result = new ArrayList<IPiece>();
+  public Set<IPiece> canTakeThese(IBoard board) {
+    Set<IPiece> result = new HashSet<IPiece>();
     // up+left
     result.addAll(super.simulateAttacks(this.col - 1, this.row - 1, -1, -1, board));
     // up+right

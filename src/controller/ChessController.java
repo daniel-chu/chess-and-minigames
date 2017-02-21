@@ -171,6 +171,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
   private void restartGame() {
     this.view.resetFocus();
     this.model.restartGame();
+    this.view.resetSelectedCell();
     this.view.clearInputString();
     this.updateView();
   }

@@ -1,8 +1,10 @@
 package model.pieces;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -121,14 +123,22 @@ public abstract class APiece implements IPiece {
     this.row = targetRow;
   }
 
-  public List<IPiece> canBeTakenBy(IBoard board) {
-    List<IPiece> result = new ArrayList<IPiece>();
-    // TODO finish this
-
+  public Set<IPiece> canBeTakenBy(IBoard board) {
+    Set<IPiece> result = new HashSet<IPiece>();
+    for (int col = 0; col < board.getWidth(); col++) {
+      for (int row = 0; row < board.getHeight(); row++) {
+        IPiece curPiece = board.getPieceAt(col, row);
+        if (curPiece != null && curPiece.getTeam() != this.getTeam()) {
+          if (curPiece.canTakeThese(board).contains(this)) {
+            result.add(curPiece);
+          }
+        }
+      }
+    }
     return result;
   }
 
-  public abstract List<IPiece> canTakeThese(IBoard board);
+  public abstract Set<IPiece> canTakeThese(IBoard board);
 
   /**
    * Simulates moving in a certain direction by the given column increment and row increment until

@@ -4,7 +4,7 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 public enum PieceType {
-  PAWN(1, "P"), ROOK(5, "R"), BISHOP(3, "B"), KNIGHT(3, "K"), QUEEN(9, "Q"), KING(0, "K"), EMPTY
+  PAWN(1, "P"), ROOK(5, "R"), BISHOP(3, "B"), KNIGHT(3, "N"), QUEEN(9, "Q"), KING(0, "K"), EMPTY
           (-1, " ");
 
   /**

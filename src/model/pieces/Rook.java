@@ -4,8 +4,8 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -52,8 +52,8 @@ public class Rook extends APiece {
   }
 
   @Override
-  public List<IPiece> canTakeThese(IBoard board) {
-    List<IPiece> result = new ArrayList<IPiece>();
+  public Set<IPiece> canTakeThese(IBoard board) {
+    Set<IPiece> result = new HashSet<IPiece>();
     // traverses left
     result.addAll(super.simulateAttacks(this.col - 1, this.row, -1, 0, board));
     // traverses right

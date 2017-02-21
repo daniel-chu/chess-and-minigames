@@ -4,6 +4,8 @@ package model.players;
  * Created by danielchu on 12/30/16.
  */
 
+// TODO maybe implement names
+
 /**
  * Abstract class representing a player
  */

@@ -4,8 +4,8 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.board.IBoard;
 import model.players.Team;
@@ -49,8 +49,8 @@ public class Knight extends APiece {
   }
 
   @Override
-  public List<IPiece> canTakeThese(IBoard board) {
-    List<IPiece> result = new ArrayList<IPiece>();
+  public Set<IPiece> canTakeThese(IBoard board) {
+    Set<IPiece> result = new HashSet<IPiece>();
     // up 1 + left 2
     addPieceFromJump(this.col - 1, this.row - 2, result, board);
     // up 1 + right 2
@@ -78,7 +78,7 @@ public class Knight extends APiece {
    * @param result    the result list
    * @param board     the board we are adding from
    */
-  private void addPieceFromJump(int targetCol, int targetRow, List<IPiece> result, IBoard board) {
+  private void addPieceFromJump(int targetCol, int targetRow, Set<IPiece> result, IBoard board) {
     if (board.validCoordinates(targetCol, targetRow) && this.validMove(targetCol, targetRow, board)) {
       IPiece target = board.getPieceAt(targetCol, targetRow);
       if ((target != null) && (target.getTeam() != this.team)) {
