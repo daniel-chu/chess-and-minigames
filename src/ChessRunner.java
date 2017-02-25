@@ -6,6 +6,7 @@ import model.players.HumanPlayer;
 import model.players.IPlayer;
 import model.players.Team;
 import model.StandardChess;
+import utils.GameFactory;
 import view.IGuiView;
 import view.MainView;
 
@@ -15,14 +16,19 @@ import view.MainView;
 public class ChessRunner {
 
   public static void main(String[] args) {
-    IGuiView guiView = new MainView();
 
+    IGuiView guiView = new MainView();
     IPlayer player1 = new HumanPlayer(Team.ONE);
     IPlayer player2 = new HumanPlayer(Team.TWO);
-    IChessGameModel standardGame = new StandardChess(player1, player2);
-    IChessGameModel pawnRush = new PawnRush(player1, player2);
+    IChessGameModel chosenGame;
+    if (args.length == 0) {
+//      chosenGame = new StandardChess(player1, player2);
+      chosenGame = new PawnRush(player1, player2);
 
-    IChessController regularController = new ChessController(pawnRush, guiView);
+    } else {
+      chosenGame = GameFactory.createGameOfType(args[0], player1, player2);
+    }
+    IChessController regularController = new ChessController(chosenGame, guiView);
 
     regularController.run();
   }
