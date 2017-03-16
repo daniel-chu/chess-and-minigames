@@ -9,7 +9,6 @@ import model.players.IPlayer;
  */
 
 // TODO implement castling
-// TODO implement checkmate
 // TODO implement stalemate or win conditions
 // TODO maybe implement undo last move
 
@@ -17,6 +16,16 @@ import model.players.IPlayer;
  * Standard chess game.
  */
 public class StandardChess extends AChessGame {
+
+  /**
+   * Reference to team one's King.
+   */
+  IPiece teamOneKing;
+
+  /**
+   * Reference to team two's King.
+   */
+  IPiece teamTwoKing;
 
   /**
    * Constructor for a standard game of chess.
@@ -65,26 +74,32 @@ public class StandardChess extends AChessGame {
     // sets up queens and kings
     kingSideCol = 4;
     queenSideCol = 3;
-    this.board.addPiece(new King(p1.getTeam(), kingSideCol, p1row), kingSideCol, p1row);
+    this.teamOneKing = new King(p1.getTeam(), kingSideCol, p1row);
+    this.teamTwoKing = new King(p2.getTeam(), kingSideCol, p2row);
+    this.board.addPiece(teamOneKing, kingSideCol, p1row);
     this.board.addPiece(new Queen(p1.getTeam(), queenSideCol, p1row), queenSideCol, p1row);
-    this.board.addPiece(new King(p2.getTeam(), kingSideCol, p2row), kingSideCol, p2row);
+    this.board.addPiece(teamTwoKing, kingSideCol, p2row);
     this.board.addPiece(new Queen(p2.getTeam(), queenSideCol, p2row), queenSideCol, p2row);
   }
 
   @Override
   public IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
           IllegalArgumentException {
-      IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
-      if (takenPiece != null) {
-        // game specific processing in here, or split into own method if necessary
-      }
-      this.handleTurns();
-      return takenPiece;
+    IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
+    if (takenPiece != null) {
+      // game specific processing in here, or split into own method if necessary
+    }
+    this.handleTurns();
+    return takenPiece;
   }
 
-  // TODO do this
   @Override
   public GameStatusCode getGameStatus() {
+    if (this.teamOneKing.canBeTakenBy(this.board).size() > 0
+            || this.teamTwoKing.canBeTakenBy(this.board).size() > 0) {
+      return GameStatusCode.CHECK;
+    }
+    // TODO finish this with checkmate/stalemate
     return GameStatusCode.IN_PROGRESS;
   }
 
