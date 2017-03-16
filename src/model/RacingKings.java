@@ -69,11 +69,9 @@ public class RacingKings extends AChessGame {
   @Override
   public boolean willCauseInvalidStateFromCheck(int fromCol, int fromRow, int targetCol, int
           targetRow) {
-    // TODO implement this (checks cannot exist at all)
     IBoard copyOfBoard = this.board.deepCopy();
 
     List<IPiece> allCopiedPieces = copyOfBoard.getAllPiecesOnBoard();
-    Team teamMakingMove = this.board.getPieceAt(fromCol, fromRow).getTeam();
 
     IPiece copyOfTeamOneKing = null;
     IPiece copyOfTeamTwoKing = null;

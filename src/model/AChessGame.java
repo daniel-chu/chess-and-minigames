@@ -81,12 +81,28 @@ public abstract class AChessGame implements IChessGameModel {
   @Override
   public boolean willCauseInvalidStateFromCheck(int fromCol, int fromRow, int targetCol, int
           targetRow) {
-    // TODO implement this (checks cannot exist at all)
     IBoard copyOfBoard = this.board.deepCopy();
 
-    List<IPiece> allPieces = copyOfBoard.getAllPiecesOnBoard();
+    List<IPiece> allCopiedPieces = copyOfBoard.getAllPiecesOnBoard();
     Team teamMakingMove = this.board.getPieceAt(fromCol, fromRow).getTeam();
 
+    IPiece copyOfTargetKing = null;
+
+    for (IPiece piece : allCopiedPieces) {
+      if (piece.getType() == PieceType.KING) {
+        if (piece.getTeam() == teamMakingMove) {
+          copyOfTargetKing = piece;
+        }
+      }
+    }
+
+    copyOfBoard.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
+    if (copyOfTargetKing == null) {
+      throw new IllegalArgumentException("Invalid game state. Please restart the game.");
+    }
+    if (copyOfTargetKing.canBeTakenBy(copyOfBoard).size() > 0) {
+      return true;
+    }
 
     return false;
   }
