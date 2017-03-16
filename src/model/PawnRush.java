@@ -31,6 +31,7 @@ public class PawnRush extends AChessGame {
 
   @Override
   protected void setupBoard() {
+    super.setupBoard();
     this.board = new StandardBoard();
     int row = 1;
     // sets up pawns

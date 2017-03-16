@@ -41,6 +41,7 @@ public class RacingKings extends AChessGame {
 
   @Override
   protected void setupBoard() {
+    super.setupBoard();
     this.teamOneKingReachedFinishLine = false;
     this.teamTwoKingReachedFinishLine = false;
     this.teamTwoMustFinishThisTurn = false;

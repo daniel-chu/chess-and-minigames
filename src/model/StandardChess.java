@@ -40,6 +40,7 @@ public class StandardChess extends AChessGame {
 
   @Override
   protected void setupBoard() {
+    super.setupBoard();
     this.board = new StandardBoard();
     // sets up pawns
     int p1row = 1;
@@ -119,4 +120,5 @@ public class StandardChess extends AChessGame {
     super.restartGame();
     this.setupBoard();
   }
+
 }

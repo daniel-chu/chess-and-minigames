@@ -97,6 +97,9 @@ public class ChessController implements IChessController, IViewButtonListeners {
     result.addKeyPressed(KeyEvent.VK_R, () -> {
       this.restartGame();
     });
+    result.addKeyPressed(KeyEvent.VK_U, () -> {
+      this.undoLastMove();
+    });
     return result;
   }
 
@@ -179,6 +182,19 @@ public class ChessController implements IChessController, IViewButtonListeners {
     this.view.resetSelectedCell();
     this.view.clearInputString();
     this.view.setStatusMessage("");
+    this.updateView();
+  }
+
+  /**
+   * Handles undoing the last move.
+   */
+  private void undoLastMove() {
+    this.view.resetFocus();
+    this.model.undoLastMove();
+    this.view.resetSelectedCell();
+    this.view.clearInputString();
+    this.view.setStatusMessage("");
+    this.view.setInfo(model.getBoard(), model.whosTurn());
     this.updateView();
   }
 

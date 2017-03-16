@@ -61,6 +61,11 @@ public interface IChessGameModel {
   PieceInfo[][] getBoard();
 
   /**
+   * Undos the last move.
+   */
+  void undoLastMove();
+
+  /**
    * Restarts the game.
    */
   void restartGame();
