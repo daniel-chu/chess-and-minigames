@@ -76,4 +76,11 @@ public interface IPiece {
    * @return the type of this piece
    */
   PieceType getType();
+
+  /**
+   * Creates a copy of this piece.
+   *
+   * @return a copy of the piece.
+   */
+  IPiece copy();
 }

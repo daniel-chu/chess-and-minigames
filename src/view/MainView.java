@@ -254,4 +254,9 @@ public class MainView extends JFrame implements IGuiView {
     curSelected = "";
     this.boardPanel.resetSelectedColAndRow();
   }
+
+  @Override
+  public void setTitleToGameMode(String gameModeName) {
+    this.setTitle(gameModeName);
+  }
 }

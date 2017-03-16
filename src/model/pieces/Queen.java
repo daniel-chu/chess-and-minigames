@@ -60,4 +60,9 @@ public class Queen extends APiece {
     result.addAll(super.simulateAttacks(this.col + 1, this.row + 1, 1, 1, board));
     return result;
   }
+
+  @Override
+  public IPiece copy() {
+    return new Queen(this.getTeam(), this.getCol(), this.getRow());
+  }
 }

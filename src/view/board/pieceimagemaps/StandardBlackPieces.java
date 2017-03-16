@@ -35,7 +35,7 @@ public class StandardBlackPieces implements IPieceImageMaps {
   /**
    * Gets an image icon from the file path, and scales it to the correct size.
    *
-   * @param filePath the fiel path the image icon is at
+   * @param filePath the file path the image icon is at
    * @return the scaled image icon
    */
   private ImageIcon getAndScaleImage(String filePath) {

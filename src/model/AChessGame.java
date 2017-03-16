@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import model.board.IBoard;
 import model.pieces.IPiece;
 import model.pieces.PieceInfo;
@@ -71,9 +73,22 @@ public abstract class AChessGame implements IChessGameModel {
     // makes the move and stores the piece that was taken (null if none)
     IPiece takenPiece = this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
     if (takenPiece != null) {
-      // TODO process piece if needed (common to all gametypes) or split into own method
+      // process piece if needed (common to all gametypes) or split into own method
     }
     return takenPiece;
+  }
+
+  @Override
+  public boolean willCauseInvalidStateFromCheck(int fromCol, int fromRow, int targetCol, int
+          targetRow) {
+    // TODO implement this (checks cannot exist at all)
+    IBoard copyOfBoard = this.board.deepCopy();
+
+    List<IPiece> allPieces = copyOfBoard.getAllPiecesOnBoard();
+    Team teamMakingMove = this.board.getPieceAt(fromCol, fromRow).getTeam();
+
+
+    return false;
   }
 
   @Override
@@ -107,16 +122,21 @@ public abstract class AChessGame implements IChessGameModel {
 
   @Override
   public boolean hasPieceOnCell(String cell) {
-    if(!cell.matches("[a-zA-Z]\\d+")) {
+    if (!cell.matches("[a-zA-Z]\\d+")) {
       return false;
     }
     char col = cell.charAt(0);
-    int colIndex = (int)col - 65;
+    int colIndex = (int) col - 65;
     int rowIndex = Integer.parseInt(cell.substring(1)) - 1;
     IPiece piece = this.board.getPieceAt(colIndex, rowIndex);
-    if(piece == null) {
+    if (piece == null) {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public String getGameModeName() {
+    return "Chess";
   }
 }

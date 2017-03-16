@@ -28,6 +28,17 @@ public interface IChessGameModel {
           IllegalArgumentException;
 
   /**
+   * Checks if this move would be invalid due to a check or other criteria specific to the game.
+   *
+   * @param fromCol   piece's original column
+   * @param fromRow   piece's original row
+   * @param targetCol target column
+   * @param targetRow target row
+   * @return if making that move will cause the game to be in an invalid state
+   */
+  boolean willCauseInvalidStateFromCheck(int fromCol, int fromRow, int targetCol, int targetRow);
+
+  /**
    * Tells us the status of the game. 0 if the game is not over, 1 if player 1 has won, and 2 if
    * player 2 has won.
    *
@@ -62,4 +73,10 @@ public interface IChessGameModel {
    * @return true if there is a piece, false otherwise
    */
   boolean hasPieceOnCell(String cell);
+
+  /**
+   * Gets the name of this game mode.
+   */
+  String getGameModeName();
+
 }

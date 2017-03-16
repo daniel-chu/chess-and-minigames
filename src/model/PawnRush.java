@@ -1,11 +1,14 @@
 package model;
 
+import java.util.List;
+
 import model.board.StandardBoard;
 import model.pieces.IPiece;
 import model.pieces.Pawn;
 import model.pieces.PieceType;
 import model.pieces.Queen;
 import model.players.IPlayer;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/31/16.
@@ -42,11 +45,18 @@ public class PawnRush extends AChessGame {
   public IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
           IllegalArgumentException {
     IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
-    if(takenPiece != null) {
+    if (takenPiece != null) {
       // game specific processing in here, or split into own method if necessary
     }
     this.handleTurns();
     return takenPiece;
+  }
+
+  @Override
+  public boolean willCauseInvalidStateFromCheck(int fromCol, int fromRow, int targetCol, int
+          targetRow) {
+    // this will never happen in this game
+    return false;
   }
 
   @Override
@@ -102,5 +112,10 @@ public class PawnRush extends AChessGame {
   public void restartGame() {
     super.restartGame();
     this.setupBoard();
+  }
+
+  @Override
+  public String getGameModeName() {
+    return "Pawn Rush";
   }
 }

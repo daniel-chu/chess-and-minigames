@@ -82,4 +82,9 @@ public class King extends APiece {
     }
     return result;
   }
+
+  @Override
+  public IPiece copy() {
+    return new King(this.getTeam(), this.getCol(), this.getRow());
+  }
 }

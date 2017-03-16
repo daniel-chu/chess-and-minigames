@@ -56,6 +56,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
     this.view.addButtonsAndListeners(this);
     this.view.addKeyListenerToComponents(keyHandler);
     this.view.addMouseListenerToComponents(mouseHandler);
+    this.view.setTitleToGameMode(this.model.getGameModeName());
     this.updateView();
     this.view.updateModelDependentAttributes();
   }
@@ -66,7 +67,6 @@ public class ChessController implements IChessController, IViewButtonListeners {
   }
 
   public MouseHandler createMouseHandler() {
-    //TODO implement mouse controls
     MouseHandler result = new MouseHandler();
     // adds in a mouse clicked event for when the user clicks on the panel
     result.addMouseClicked(MouseEvent.BUTTON1, () -> {
@@ -96,7 +96,6 @@ public class ChessController implements IChessController, IViewButtonListeners {
     result.addKeyPressed(KeyEvent.VK_R, () -> {
       this.restartGame();
     });
-    // TODO implement keyboard controls
     return result;
   }
 
@@ -185,11 +184,15 @@ public class ChessController implements IChessController, IViewButtonListeners {
     int targetCol = this.parseColumnLabel(target);
     int targetRow = Integer.parseInt(target.substring(1)) - 1;
 
-    // makes the move and updates the view
-    this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
-    this.view.setStatusMessage("");
-    this.view.setInfo(model.getBoard(), model.whosTurn());
-    this.view.update();
-    this.checkIfWin();
+    if(!this.model.willCauseInvalidStateFromCheck(fromCol, fromRow, targetCol, targetRow)) {
+      // makes the move and updates the view
+      this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
+      this.view.setStatusMessage("");
+      this.view.setInfo(model.getBoard(), model.whosTurn());
+      this.view.update();
+      this.checkIfWin();
+    } else {
+      this.view.setStatusMessage("Cannot make this move because of a check.");
+    }
   }
 }

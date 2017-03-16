@@ -65,4 +65,9 @@ public class Rook extends APiece {
     return result;
   }
 
+  @Override
+  public IPiece copy() {
+    return new Rook(this.getTeam(), this.getCol(), this.getRow());
+  }
+
 }

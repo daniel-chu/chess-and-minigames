@@ -1,5 +1,7 @@
 package model.board;
 
+import java.util.List;
+
 import model.pieces.IPiece;
 
 /**
@@ -70,5 +72,19 @@ public interface IBoard {
    * @return if this pair of coordinates is on this board
    */
   boolean validCoordinates(int col, int row);
+
+  /**
+   * Gets a list of all pieces on this board.
+   *
+   * @return a list of all pieces on the board.
+   */
+  List<IPiece> getAllPiecesOnBoard();
+
+  /**
+   * Creates a deep copy of the board.
+   *
+   * @return a board that is a copy of this one.
+   */
+  IBoard deepCopy();
 
 }

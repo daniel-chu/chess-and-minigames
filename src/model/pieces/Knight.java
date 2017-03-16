@@ -86,4 +86,9 @@ public class Knight extends APiece {
       }
     }
   }
+
+  @Override
+  public IPiece copy() {
+    return new Knight(this.getTeam(), this.getCol(), this.getRow());
+  }
 }

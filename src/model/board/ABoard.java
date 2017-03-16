@@ -1,5 +1,8 @@
 package model.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.pieces.IPiece;
 
 /**
@@ -78,4 +81,20 @@ public abstract class ABoard implements IBoard {
     }
     return true;
   }
+
+  @Override
+  public List<IPiece> getAllPiecesOnBoard() {
+    List<IPiece> allPieces = new ArrayList<IPiece>();
+    for (int row = 0; row < this.getHeight(); row++) {
+      for (int col = 0; col < this.getWidth(); col++) {
+        if(this.board[col][row] != null) {
+          allPieces.add(this.board[col][row]);
+        }
+      }
+    }
+    return allPieces;
+  }
+
+  @Override
+  public abstract IBoard deepCopy();
 }

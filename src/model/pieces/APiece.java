@@ -62,6 +62,7 @@ public abstract class APiece implements IPiece {
    * @param board     the board representing where all pieces are
    * @return if we can move the piece to that spot
    */
+  @Override
   public boolean validMove(int targetCol, int targetRow, IBoard board) {
     // ensures the piece is not trying to move on top of its own team's piece
     IPiece currentPiece = board.getPieceAt(targetCol, targetRow);
@@ -118,11 +119,13 @@ public abstract class APiece implements IPiece {
    * @param targetCol the column to move to
    * @param targetRow the row to move to
    */
+  @Override
   public void moveTo(int targetCol, int targetRow) {
     this.col = targetCol;
     this.row = targetRow;
   }
 
+  @Override
   public Set<IPiece> canBeTakenBy(IBoard board) {
     Set<IPiece> result = new HashSet<IPiece>();
     for (int col = 0; col < board.getWidth(); col++) {

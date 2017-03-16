@@ -56,4 +56,9 @@ public class Bishop extends APiece {
     return result;
   }
 
+  @Override
+  public IPiece copy() {
+    return new Bishop(this.getTeam(), this.getCol(), this.getRow());
+  }
+
 }

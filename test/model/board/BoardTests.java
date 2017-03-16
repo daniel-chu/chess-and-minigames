@@ -83,4 +83,24 @@ public class BoardTests {
     assertTrue(board1.validCoordinates(4, 7));
   }
 
+  @Test
+  public void testDeepCopy() throws Exception {
+    IBoard copyOfBoard1 = board1.deepCopy();
+
+    IPiece copyOft1knight1 = copyOfBoard1.getPieceAt(t1knight1.getCol(), t1knight1.getRow());
+    IPiece copyOft2queen1 = copyOfBoard1.getPieceAt(t2queen1.getCol(), t2queen1.getRow());
+    assertEquals(copyOft2queen1, t2queen1);
+    assertFalse(copyOft2queen1 == t2queen1);
+
+    copyOfBoard1.movePieceFromTo(copyOft1knight1.getCol(), copyOft1knight1.getRow(), copyOft2queen1.getCol(),
+            copyOft2queen1.getRow());
+
+    assertEquals(copyOfBoard1.getPieceAt(copyOft2queen1.getCol(), copyOft2queen1.getRow()), copyOft1knight1);
+
+    // tests that it didnt change the original board
+    assertNotEquals(t1knight1.getCol(), copyOft1knight1.getCol());
+    assertNotEquals(t1knight1.getRow(), copyOft1knight1.getRow());
+    assertEquals(board1.getPieceAt(t1knight1.getCol(), t1knight1.getRow()), t1knight1);
+  }
+
 }

@@ -104,4 +104,9 @@ public class Pawn extends APiece {
     Set<IPiece> result = new HashSet<IPiece>();
     return result;
   }
+
+  @Override
+  public IPiece copy() {
+    return new Pawn(this.getTeam(), this.getCol(), this.getRow());
+  }
 }

@@ -74,12 +74,12 @@ public class StandardChess extends AChessGame {
   @Override
   public IPiece movePiece(int fromCol, int fromRow, int targetCol, int targetRow) throws
           IllegalArgumentException {
-    IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
-    if (takenPiece != null) {
-      // game specific processing in here, or split into own method if necessary
-    }
-    this.handleTurns();
-    return takenPiece;
+      IPiece takenPiece = super.movePiece(fromCol, fromRow, targetCol, targetRow);
+      if (takenPiece != null) {
+        // game specific processing in here, or split into own method if necessary
+      }
+      this.handleTurns();
+      return takenPiece;
   }
 
   @Override

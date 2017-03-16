@@ -76,6 +76,7 @@ public interface IGuiView extends IChessGameView {
 
   /**
    * Selects a cell based on the given x and y coordinates
+   *
    * @param x the x coordinate of the click in pixels
    * @param y the y coordinate of the click in pixels
    */
@@ -85,4 +86,11 @@ public interface IGuiView extends IChessGameView {
    * Reselects the selected cell.
    */
   void resetSelectedCell();
+
+  /**
+   * Sets the title to the given string, which is the name of the game mode
+   *
+   * @param gameModeName the name of the game mode
+   */
+  void setTitleToGameMode(String gameModeName);
 }
