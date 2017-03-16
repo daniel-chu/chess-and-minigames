@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import controller.handlers.KeyHandler;
 import controller.handlers.MouseHandler;
+import model.GameStatusCode;
 import model.IChessGameModel;
 import view.IGuiView;
 import view.IViewButtonListeners;
@@ -74,7 +75,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
       this.view.selectCell(result.getMouseEvent().getX(), result.getMouseEvent().getY());
       String newCell = this.view.getCurrentSelected();
 
-      if(this.model.hasPieceOnCell(previousCell)) {
+      if (this.model.hasPieceOnCell(previousCell)) {
         if (!previousCell.isEmpty() && !newCell.isEmpty()) {
           try {
             this.makeMove(previousCell, newCell);
@@ -141,14 +142,17 @@ public class ChessController implements IChessController, IViewButtonListeners {
    * Checks if someone won the game, and tells the view to display a win screen if so.
    */
   private void checkIfWin() {
-    int winnerCode = this.model.isGameOver();
-    if (winnerCode == 1) {
+    GameStatusCode gameStatusCode = this.model.getGameStatus();
+    if (gameStatusCode == GameStatusCode.TEAM_ONE_WINS) {
       this.view.winScreen("Player 1", this);
-    } else if (winnerCode == 2) {
+    } else if (gameStatusCode == GameStatusCode.TEAM_TWO_WINS) {
       this.view.winScreen("Player 2", this);
-    } else if (winnerCode == 3) {
-      this.view.drawScreen(this);
+    } else if (gameStatusCode == GameStatusCode.DRAW) {
+      this.view.drawStalemateScreen("draw", this);
+    } else if (gameStatusCode == GameStatusCode.STALEMATE) {
+      this.view.drawStalemateScreen("stalemate", this);
     }
+    this.view.setStatusMessage(gameStatusCode.getMessage());
   }
 
   /**
@@ -174,6 +178,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
     this.model.restartGame();
     this.view.resetSelectedCell();
     this.view.clearInputString();
+    this.view.setStatusMessage("");
     this.updateView();
   }
 
@@ -186,7 +191,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
     int targetCol = this.parseColumnLabel(target);
     int targetRow = Integer.parseInt(target.substring(1)) - 1;
 
-    if(!this.model.willCauseInvalidStateFromCheck(fromCol, fromRow, targetCol, targetRow)) {
+    if (!this.model.willCauseInvalidStateFromCheck(fromCol, fromRow, targetCol, targetRow)) {
       // makes the move and updates the view
       this.model.movePiece(fromCol, fromRow, targetCol, targetRow);
       this.view.setStatusMessage("");

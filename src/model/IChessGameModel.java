@@ -47,7 +47,7 @@ public interface IChessGameModel {
    *
    * @return the code representing if the game has been won yet, and if so, by who.
    */
-  int isGameOver();
+  GameStatusCode getGameStatus();
 
   /**
    * Gets the player whose turn it currently is.

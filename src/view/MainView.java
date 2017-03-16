@@ -237,7 +237,7 @@ public class MainView extends JFrame implements IGuiView {
   // TODO REFACTOR DRAW SCREEN AND WIN SCREEN
 
   @Override
-  public void drawScreen(IViewButtonListeners listeners) {
+  public void drawStalemateScreen(String type, IViewButtonListeners listeners) {
     this.setStatusMessage("Game Over!");
     this.setEnabled(false);
     JFrame winPopup = new JFrame("GAME OVER");
@@ -256,7 +256,7 @@ public class MainView extends JFrame implements IGuiView {
       System.exit(0);
     });
 
-    JLabel winText = new JLabel("The game ended in a draw! Restart or quit?");
+    JLabel winText = new JLabel("The game ended in a " + type + "! Restart or quit?");
     winPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
 

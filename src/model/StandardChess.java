@@ -82,9 +82,10 @@ public class StandardChess extends AChessGame {
       return takenPiece;
   }
 
+  // TODO do this
   @Override
-  public int isGameOver() {
-    return 0;
+  public GameStatusCode getGameStatus() {
+    return GameStatusCode.IN_PROGRESS;
   }
 
   /**

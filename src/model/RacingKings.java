@@ -113,7 +113,7 @@ public class RacingKings extends AChessGame {
   }
 
   @Override
-  public int isGameOver() {
+  public GameStatusCode getGameStatus() {
     for (int col = 0; col < this.board.getWidth(); col++) {
       IPiece pieceAtEndOfBoard = this.board.getPieceAt(col, 7);
       if (pieceAtEndOfBoard != null && pieceAtEndOfBoard.getType() == PieceType.KING) {
@@ -128,18 +128,19 @@ public class RacingKings extends AChessGame {
 
     if (this.teamOneKingReachedFinishLine && this.teamTwoMustFinishThisTurn
             && !this.teamTwoKingReachedFinishLine) {
-      return 1;
+      return GameStatusCode.TEAM_ONE_WINS;
     } else if (!this.teamOneKingReachedFinishLine && this.teamTwoKingReachedFinishLine) {
-      return 2;
+      return GameStatusCode.TEAM_TWO_WINS;
     } else if (this.teamOneKingReachedFinishLine && this.teamTwoMustFinishThisTurn
             && this.teamTwoKingReachedFinishLine) {
-      return 3;
+      return GameStatusCode.DRAW;
     }
 
     if (this.teamOneKingReachedFinishLine) {
       this.teamTwoMustFinishThisTurn = true;
+      return GameStatusCode.TEAM_TWO_MUST_WIN_NEXT_TURN;
     }
-    return 0;
+    return GameStatusCode.IN_PROGRESS;
   }
 
   /**

@@ -60,13 +60,13 @@ public class PawnRush extends AChessGame {
   }
 
   @Override
-  public int isGameOver() {
+  public GameStatusCode getGameStatus() {
     // checks if any pawns have reached the other side
     for (int col = 0; col < this.board.getWidth(); col++) {
       IPiece curPiece = this.board.getPieceAt(col, 7);
       if (curPiece != null) {
         if (curPiece.getType() == PieceType.PAWN) {
-          return 1;
+          return GameStatusCode.TEAM_ONE_WINS;
         }
       }
     }
@@ -87,14 +87,14 @@ public class PawnRush extends AChessGame {
     }
     // if there are 0 queens left, player 1 has won
     if (numQueen == 0) {
-      return 1;
+      return GameStatusCode.TEAM_ONE_WINS;
     }
     // if there are 0 pawns left, player 2 has won
     if (numPawn == 0) {
-      return 2;
+      return GameStatusCode.TEAM_TWO_WINS;
     }
     // otherwise, the game is still in progress
-    return 0;
+    return GameStatusCode.IN_PROGRESS;
   }
 
   /**

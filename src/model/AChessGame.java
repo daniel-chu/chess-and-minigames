@@ -108,7 +108,7 @@ public abstract class AChessGame implements IChessGameModel {
   }
 
   @Override
-  public abstract int isGameOver();
+  public abstract GameStatusCode getGameStatus();
 
   @Override
   public Team whosTurn() {

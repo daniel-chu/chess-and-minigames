@@ -64,9 +64,10 @@ public interface IGuiView extends IChessGameView {
   /**
    * Displays a draw screen and allows user to restart the game.
    *
+   * @param type whether or not it's a draw or stalemate
    * @param listeners instance of IViewButtonListeners containing listeners needed
    */
-  void drawScreen(IViewButtonListeners listeners);
+  void drawStalemateScreen(String type, IViewButtonListeners listeners);
 
   /**
    * Updates the status message to display a message.
