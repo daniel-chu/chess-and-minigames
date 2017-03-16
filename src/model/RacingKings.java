@@ -8,7 +8,6 @@ import model.pieces.Bishop;
 import model.pieces.IPiece;
 import model.pieces.King;
 import model.pieces.Knight;
-import model.pieces.Pawn;
 import model.pieces.PieceType;
 import model.pieces.Queen;
 import model.pieces.Rook;
