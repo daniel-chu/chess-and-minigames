@@ -9,7 +9,7 @@ import model.players.IPlayer;
  */
 
 // TODO implement castling
-// TODO implement check, checkmate
+// TODO implement checkmate
 // TODO implement stalemate or win conditions
 // TODO maybe implement undo last move
 

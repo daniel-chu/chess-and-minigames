@@ -234,6 +234,60 @@ public class MainView extends JFrame implements IGuiView {
     winPopup.setVisible(true);
   }
 
+  // TODO REFACTOR DRAW SCREEN AND WIN SCREEN
+
+  @Override
+  public void drawScreen(IViewButtonListeners listeners) {
+    this.setStatusMessage("Game Over!");
+    this.setEnabled(false);
+    JFrame winPopup = new JFrame("GAME OVER");
+    JPanel winPanel = new JPanel();
+
+    JButton restart = new JButton("Restart");
+    restart.addActionListener(listeners.getRestartListener());
+    restart.addActionListener((ActionEvent e) -> {
+      winPopup.dispose();
+      this.setEnabled(true);
+    });
+
+    JButton quit = new JButton("Quit");
+    quit.addActionListener((ActionEvent e) -> {
+      winPopup.dispose();
+      System.exit(0);
+    });
+
+    JLabel winText = new JLabel("The game ended in a draw! Restart or quit?");
+    winPanel.setLayout(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+
+    c.insets = new Insets(10, 20, 0, 20);
+    c.gridwidth = 2;
+    c.gridx = 1;
+    c.gridy = 1;
+    winPanel.add(winText, c);
+    c.insets = new Insets(10, 20, 10, 20);
+    c.gridwidth = 1;
+    c.gridx = 1;
+    c.gridy = 2;
+    winPanel.add(restart, c);
+    c.gridx = 2;
+    c.gridy = 2;
+    winPanel.add(quit, c);
+
+    winPopup.add(winPanel);
+    winPopup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    winPopup.pack();
+
+    Point gameFrameLocation = this.getLocation();
+    int mainCenterX = (int) (gameFrameLocation.getX() + this.getWidth() / 2);
+    int mainCenterY = (int) (gameFrameLocation.getY() + this.getHeight() / 2);
+    int winPopupX = mainCenterX - winPopup.getWidth() / 2;
+    int winPopupY = mainCenterY - winPopup.getHeight() / 2;
+
+    winPopup.setLocation(winPopupX, winPopupY);
+    winPopup.setVisible(true);
+  }
+
   @Override
   public void setStatusMessage(String message) {
     this.statusLabel.setText(message);

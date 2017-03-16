@@ -146,6 +146,8 @@ public class ChessController implements IChessController, IViewButtonListeners {
       this.view.winScreen("Player 1", this);
     } else if (winnerCode == 2) {
       this.view.winScreen("Player 2", this);
+    } else if (winnerCode == 3) {
+      this.view.drawScreen(this);
     }
   }
 

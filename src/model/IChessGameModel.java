@@ -39,8 +39,11 @@ public interface IChessGameModel {
   boolean willCauseInvalidStateFromCheck(int fromCol, int fromRow, int targetCol, int targetRow);
 
   /**
-   * Tells us the status of the game. 0 if the game is not over, 1 if player 1 has won, and 2 if
-   * player 2 has won.
+   * Tells us the status of the game.
+   * - 0: if the game is not over
+   * - 1: if player 1 has won
+   * - 2: if player 2 has won
+   * - 3: if there is a draw/stalemate
    *
    * @return the code representing if the game has been won yet, and if so, by who.
    */

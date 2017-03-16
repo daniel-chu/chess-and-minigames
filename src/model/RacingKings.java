@@ -19,10 +19,20 @@ import model.players.Team;
  */
 public class RacingKings extends AChessGame {
 
+  /**
+   * Represents if team one's king is at the finish line
+   */
+  private boolean teamOneKingReachedFinishLine;
 
-  // TODO implement some sort of turn counter (probably in all modes) so that we can check that
-  // black reaches end the turn after white (in order to draw).
+  /**
+   * Represents if team two's king is at the finish line
+   */
+  private boolean teamTwoKingReachedFinishLine;
 
+  /**
+   * If team two must reach the finish line this turn to end the game with a draw.
+   */
+  private boolean teamTwoMustFinishThisTurn;
 
   public RacingKings(IPlayer p1, IPlayer p2) {
     super(p1, p2);
@@ -31,6 +41,10 @@ public class RacingKings extends AChessGame {
 
   @Override
   protected void setupBoard() {
+    this.teamOneKingReachedFinishLine = false;
+    this.teamTwoKingReachedFinishLine = false;
+    this.teamTwoMustFinishThisTurn = false;
+
     this.board = new StandardBoard();
     // kings
     this.board.addPiece(new King(p1.getTeam(), 0, 1), 0, 1);
@@ -87,7 +101,7 @@ public class RacingKings extends AChessGame {
     }
 
     copyOfBoard.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
-    if(copyOfTeamOneKing == null || copyOfTeamTwoKing == null) {
+    if (copyOfTeamOneKing == null || copyOfTeamTwoKing == null) {
       throw new IllegalArgumentException("Invalid game state. Please restart the game.");
     }
     if (copyOfTeamOneKing.canBeTakenBy(copyOfBoard).size() > 0
@@ -100,6 +114,31 @@ public class RacingKings extends AChessGame {
 
   @Override
   public int isGameOver() {
+    for (int col = 0; col < this.board.getWidth(); col++) {
+      IPiece pieceAtEndOfBoard = this.board.getPieceAt(col, 7);
+      if (pieceAtEndOfBoard != null && pieceAtEndOfBoard.getType() == PieceType.KING) {
+        if (pieceAtEndOfBoard.getTeam() == Team.ONE) {
+          this.teamOneKingReachedFinishLine = true;
+        }
+        if (pieceAtEndOfBoard.getTeam() == Team.TWO) {
+          this.teamTwoKingReachedFinishLine = true;
+        }
+      }
+    }
+
+    if (this.teamOneKingReachedFinishLine && this.teamTwoMustFinishThisTurn
+            && !this.teamTwoKingReachedFinishLine) {
+      return 1;
+    } else if (!this.teamOneKingReachedFinishLine && this.teamTwoKingReachedFinishLine) {
+      return 2;
+    } else if (this.teamOneKingReachedFinishLine && this.teamTwoMustFinishThisTurn
+            && this.teamTwoKingReachedFinishLine) {
+      return 3;
+    }
+
+    if (this.teamOneKingReachedFinishLine) {
+      this.teamTwoMustFinishThisTurn = true;
+    }
     return 0;
   }
 

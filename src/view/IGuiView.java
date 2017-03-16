@@ -1,5 +1,6 @@
 package view;
 
+import controller.ChessController;
 import controller.handlers.KeyHandler;
 import controller.handlers.MouseHandler;
 
@@ -61,6 +62,13 @@ public interface IGuiView extends IChessGameView {
   void winScreen(String s, IViewButtonListeners listeners);
 
   /**
+   * Displays a draw screen and allows user to restart the game.
+   *
+   * @param listeners instance of IViewButtonListeners containing listeners needed
+   */
+  void drawScreen(IViewButtonListeners listeners);
+
+  /**
    * Updates the status message to display a message.
    *
    * @param message the message to be displayed
@@ -93,4 +101,5 @@ public interface IGuiView extends IChessGameView {
    * @param gameModeName the name of the game mode
    */
   void setTitleToGameMode(String gameModeName);
+
 }
