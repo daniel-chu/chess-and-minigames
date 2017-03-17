@@ -54,6 +54,11 @@ public interface IGuiView extends IChessGameView {
   void resetFocus();
 
   /**
+   * Sets the focus to the move input field.
+   */
+  void focusMoveInputField();
+
+  /**
    * Displays a win screen and allows user to restart the game.
    *
    * @param s         String containing which player has won.
@@ -92,7 +97,7 @@ public interface IGuiView extends IChessGameView {
   void selectCell(int x, int y);
 
   /**
-   * Reselects the selected cell.
+   * Resets the selected cell.
    */
   void resetSelectedCell();
 

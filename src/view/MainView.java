@@ -40,7 +40,7 @@ public class MainView extends JFrame implements IGuiView {
   /**
    * The input field.
    */
-  private JTextField inputField;
+  private JTextField moveInputField;
 
   /**
    * The currently selected cell.
@@ -115,10 +115,10 @@ public class MainView extends JFrame implements IGuiView {
     JPanel inputPanel = new JPanel();
     inputPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
     JLabel label = new JLabel("Input move: ");
-    inputField = new JTextField();
+    moveInputField = new JTextField();
 
     inputPanel.add(label);
-    inputPanel.add(inputField);
+    inputPanel.add(moveInputField);
 
     return inputPanel;
   }
@@ -143,26 +143,26 @@ public class MainView extends JFrame implements IGuiView {
 
   @Override
   public String getMoveString() {
-    return this.inputField.getText();
+    return this.moveInputField.getText();
   }
 
   @Override
   public void addButtonsAndListeners(IViewButtonListeners buttonListeners) {
     JButton moveButton = new JButton("Move");
     moveButton.addActionListener(buttonListeners.getMoveListener());
-    inputField.addActionListener(buttonListeners.getMoveListener());
+    moveInputField.addActionListener(buttonListeners.getMoveListener());
     inputPanel.add(moveButton);
   }
 
   @Override
   public void clearInputString() {
-    this.inputField.setText("");
+    this.moveInputField.setText("");
   }
 
   @Override
   public void updateModelDependentAttributes() {
-    inputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
-    inputField.revalidate();
+    moveInputField.setPreferredSize(new Dimension(this.boardPanel.getBoardWidth() - 200, 25));
+    moveInputField.revalidate();
   }
 
   @Override
@@ -180,6 +180,11 @@ public class MainView extends JFrame implements IGuiView {
   public void resetFocus() {
     this.setFocusable(true);
     this.requestFocus();
+  }
+
+  @Override
+  public void focusMoveInputField() {
+    this.moveInputField.requestFocus();
   }
 
   @Override

@@ -122,6 +122,7 @@ public class ChessController implements IChessController, IViewButtonListeners {
         String from = scanner.next();
         String target = scanner.next();
         this.makeMove(from, target);
+//        this.view.focusMoveInputField();
       } catch (NoSuchElementException err) {
         this.view.setStatusMessage("Invalid Input!");
       } catch (NumberFormatException err2) {
@@ -177,11 +178,8 @@ public class ChessController implements IChessController, IViewButtonListeners {
    * Method to restart the game, abstracted here for reuse.
    */
   private void restartGame() {
-    this.view.resetFocus();
     this.model.restartGame();
-    this.view.resetSelectedCell();
-    this.view.clearInputString();
-    this.view.setStatusMessage("");
+    this.clearGui();
     this.updateView();
   }
 
@@ -189,13 +187,20 @@ public class ChessController implements IChessController, IViewButtonListeners {
    * Handles undoing the last move.
    */
   private void undoLastMove() {
-    this.view.resetFocus();
     this.model.undoLastMove();
+    this.clearGui();
+    this.updateView();
+  }
+
+  /**
+   * Resets the gui (resets focus, clears selected cell, clears status message, clears input
+   * fields, etc.)
+   */
+  private void clearGui() {
+    this.view.resetFocus();
     this.view.resetSelectedCell();
     this.view.clearInputString();
     this.view.setStatusMessage("");
-    this.view.setInfo(model.getBoard(), model.whosTurn());
-    this.updateView();
   }
 
   /**
