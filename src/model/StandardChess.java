@@ -1,8 +1,11 @@
 package model;
 
+import java.util.List;
+
 import model.board.StandardBoard;
 import model.pieces.*;
 import model.players.IPlayer;
+import model.players.Team;
 
 /**
  * Created by danielchu on 12/30/16.
@@ -10,7 +13,6 @@ import model.players.IPlayer;
 
 // TODO implement castling
 // TODO implement stalemate or win conditions
-// TODO maybe implement undo last move
 
 /**
  * Standard chess game.
@@ -96,12 +98,29 @@ public class StandardChess extends AChessGame {
 
   @Override
   public GameStatusCode getGameStatus() {
-    if (this.teamOneKing.canBeTakenBy(this.board).size() > 0
-            || this.teamTwoKing.canBeTakenBy(this.board).size() > 0) {
-      return GameStatusCode.CHECK;
+    if (this.teamOneKing.canBeTakenByPieces(this.board).size() > 0
+            || this.teamTwoKing.canBeTakenByPieces(this.board).size() > 0) {
+      if (hasTeamCheckmated(Team.ONE)) {
+        return GameStatusCode.TEAM_ONE_WINS;
+      } else if (hasTeamCheckmated(Team.TWO)) {
+        return GameStatusCode.TEAM_TWO_WINS;
+      } else {
+        return GameStatusCode.CHECK;
+      }
     }
-    // TODO finish this with checkmate/stalemate
+    // TODO finish this with stalemate
     return GameStatusCode.IN_PROGRESS;
+  }
+
+  private boolean hasTeamCheckmated(Team team) {
+    IPiece kingFromTeam = (team == Team.ONE) ? teamOneKing : teamTwoKing;
+
+    if (kingFromTeam.canBeTakenByPieces(this.board).size() > 0) {
+      List<Move> allPossibleMoves = super.generateAllPossibleMovesForTeam(team);
+      return allPossibleMoves.size() == 0;
+    }
+
+    return false;
   }
 
   /**

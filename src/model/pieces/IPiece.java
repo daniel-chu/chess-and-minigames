@@ -3,6 +3,7 @@ package model.pieces;
 import java.util.List;
 import java.util.Set;
 
+import model.Move;
 import model.board.IBoard;
 import model.players.Team;
 
@@ -39,7 +40,7 @@ public interface IPiece {
    * @param board the board we are checking
    * @return a list of pieces that are capable of taking this piece
    */
-  Set<IPiece> canBeTakenBy(IBoard board);
+  Set<IPiece> canBeTakenByPieces(IBoard board);
 
   /**
    * Gives a list of enemy pieces that this piece is able to take in one move.
@@ -83,4 +84,12 @@ public interface IPiece {
    * @return a copy of the piece.
    */
   IPiece copy();
+
+  /**
+   * Returns a list of all possible moves that this piece is able to take using the board.
+   *
+   * @return a list of Move objects that represent all moves this piece can make.
+   */
+  List<Move> generateAllPossibleMoves(IBoard board);
+
 }

@@ -105,8 +105,8 @@ public class RacingKings extends AChessGame {
     if (copyOfTeamOneKing == null || copyOfTeamTwoKing == null) {
       throw new IllegalArgumentException("Invalid game state. Please restart the game.");
     }
-    if (copyOfTeamOneKing.canBeTakenBy(copyOfBoard).size() > 0
-            || copyOfTeamTwoKing.canBeTakenBy(copyOfBoard).size() > 0) {
+    if (copyOfTeamOneKing.canBeTakenByPieces(copyOfBoard).size() > 0
+            || copyOfTeamTwoKing.canBeTakenByPieces(copyOfBoard).size() > 0) {
       return true;
     }
 

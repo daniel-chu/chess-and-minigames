@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import model.Move;
 import model.board.IBoard;
 import model.players.Team;
 
@@ -126,7 +127,7 @@ public abstract class APiece implements IPiece {
   }
 
   @Override
-  public Set<IPiece> canBeTakenBy(IBoard board) {
+  public Set<IPiece> canBeTakenByPieces(IBoard board) {
     Set<IPiece> result = new HashSet<IPiece>();
     for (int col = 0; col < board.getWidth(); col++) {
       for (int row = 0; row < board.getHeight(); row++) {
@@ -148,19 +149,19 @@ public abstract class APiece implements IPiece {
    * that pattern is no longer a valid move. Pieces that are able to be taken are added to a
    * list, and then that list is returned.
    *
-   * @param curCol  current column this piece is simulated to be on
-   * @param curRow  current row this piece is simulated to be on
    * @param colIncr how many columns this piece will move
    * @param rowIncr how many rows this piece will move
    * @param board   the board we are checking
    * @return a list of all pieces that can be taken by following this movement pattern
    */
-  protected List<IPiece> simulateAttacks(int curCol, int curRow, int colIncr, int rowIncr,
+  protected List<IPiece> simulateAttacks(int colIncr, int rowIncr,
                                          IBoard board) {
     List<IPiece> result = new ArrayList<IPiece>();
-    while (board.validCoordinates(curCol, curRow) && this.validMove(curCol, curRow, board)) {
+    int curCol = col + colIncr;
+    int curRow = row + rowIncr;
+    while (board.validCoordinates(curCol, curRow) && validMove(curCol, curRow, board)) {
       IPiece target = board.getPieceAt(curCol, curRow);
-      if ((target != null) && (target.getTeam() != this.team)) {
+      if ((target != null) && (target.getTeam() != team)) {
         result.add(target);
       }
       curCol += colIncr;
@@ -208,4 +209,21 @@ public abstract class APiece implements IPiece {
   public String toString() {
     return this.type.toString() + "(" + "col:" + this.col + ",row:" + this.row + ")";
   }
+
+  @Override
+  public abstract List<Move> generateAllPossibleMoves(IBoard board);
+
+  protected List<Move> generateMovesWithPattern(int colIncr, int rowIncr, IBoard board) {
+    List<Move> allMoves = new ArrayList<Move>();
+    int curCol = col;
+    int curRow = row;
+
+    while (board.validCoordinates(curCol, curRow) && validMove(curCol, curRow, board)) {
+      allMoves.add(new Move(team, col, row, curCol, curRow));
+      curCol += colIncr;
+      curRow += rowIncr;
+    }
+    return allMoves;
+  }
+
 }

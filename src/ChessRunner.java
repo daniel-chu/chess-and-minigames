@@ -23,9 +23,9 @@ public class ChessRunner {
     IPlayer player2 = new HumanPlayer(Team.TWO);
     IChessGameModel chosenGame;
     if (args.length == 0) {
-//      chosenGame = new StandardChess(player1, player2);
+      chosenGame = new StandardChess(player1, player2);
 //      chosenGame = new PawnRush(player1, player2);
-      chosenGame = new RacingKings(player1, player2);
+//      chosenGame = new RacingKings(player1, player2);
 
     } else {
       chosenGame = GameFactory.createGameOfType(args[0], player1, player2);

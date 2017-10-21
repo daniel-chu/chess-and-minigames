@@ -1,8 +1,7 @@
 package model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import model.board.IBoard;
 import model.pieces.IPiece;
@@ -10,8 +9,6 @@ import model.pieces.PieceInfo;
 import model.pieces.PieceType;
 import model.players.IPlayer;
 import model.players.Team;
-
-// TODO implement UNDO last move
 
 /**
  * Created by danielchu on 12/31/16.
@@ -39,14 +36,9 @@ public abstract class AChessGame implements IChessGameModel {
   protected IPlayer currentPlayer;
 
   /**
-   * Hashmap which stores information about the last made move.
-   * - "lastFromCol" maps to the fromCol
-   * - "lastFromRow" was the fromRow
-   * - "lastToCol" was the toCol
-   * - "lastToRow" was the toRow
-   * - "lastTeamThatMoved" is which team made the last move
+   * represents what the last move was
    */
-  protected Map<String, Integer> lastMoveInfo;
+  protected Move lastMove;
 
   /**
    * Piece taken during the last move (if any).
@@ -63,7 +55,7 @@ public abstract class AChessGame implements IChessGameModel {
     this.p1 = p1;
     this.p2 = p2;
     this.currentPlayer = p1;
-    this.lastMoveInfo = new HashMap<String, Integer>();
+    this.lastMove = null;
     this.pieceTakenDuringLastMove = null;
   }
 
@@ -71,7 +63,7 @@ public abstract class AChessGame implements IChessGameModel {
    * Sets up the game board for a new game.
    */
   protected void setupBoard() {
-    this.lastMoveInfo.clear();
+    lastMove = null;
   }
 
   @Override
@@ -94,12 +86,8 @@ public abstract class AChessGame implements IChessGameModel {
     // makes the move and stores the piece that was taken (null if none)
     IPiece takenPiece = this.board.movePieceFromTo(fromCol, fromRow, targetCol, targetRow);
 
-    // updates the lastMoveInfo map to store information about this move
-    this.lastMoveInfo.put("lastFromCol", fromCol);
-    this.lastMoveInfo.put("lastFromRow", fromRow);
-    this.lastMoveInfo.put("lastToCol", targetCol);
-    this.lastMoveInfo.put("lastToRow", targetRow);
-    this.lastMoveInfo.put("lastTeamThatMoved", this.whosTurn().ordinal() + 1);
+    // updates lastMove to store information about this move
+    lastMove = new Move(this.whosTurn(), fromCol, fromRow, targetCol, targetRow);
 
     // updates the piece taken during last move
     this.pieceTakenDuringLastMove = takenPiece;
@@ -132,7 +120,7 @@ public abstract class AChessGame implements IChessGameModel {
     if (copyOfTargetKing == null) {
       throw new IllegalArgumentException("Invalid game state. Please restart the game.");
     }
-    if (copyOfTargetKing.canBeTakenBy(copyOfBoard).size() > 0) {
+    if (copyOfTargetKing.canBeTakenByPieces(copyOfBoard).size() > 0) {
       return true;
     }
 
@@ -166,35 +154,34 @@ public abstract class AChessGame implements IChessGameModel {
   @Override
   public void restartGame() {
     this.currentPlayer = p1;
-    this.lastMoveInfo = new HashMap<String, Integer>();
+    lastMove = null;
   }
 
   @Override
   public void undoLastMove() {
-    Integer undoToThisCol = this.lastMoveInfo.get("lastFromCol");
-    Integer undoToThisRow = this.lastMoveInfo.get("lastFromRow");
-    Integer undoFromThisCol = this.lastMoveInfo.get("lastToCol");
-    Integer undoFromThisRow = this.lastMoveInfo.get("lastToRow");
-    Integer lastTeamThatMoved = this.lastMoveInfo.get("lastTeamThatMoved");
-
-    // if there is a move to undo, undo it and place pieces back.
-    if (undoToThisCol == null || undoToThisRow == null || undoFromThisCol == null
-            || undoFromThisRow == null || lastTeamThatMoved == null) {
+    if(lastMove == null) {
       return;
     }
+
+    int undoToThisCol = lastMove.getFromCol();
+    int undoToThisRow = lastMove.getFromRow();
+    int undoFromThisCol = lastMove.getToCol();
+    int undoFromThisRow = lastMove.getToRow();
+    Team lastTeamThatMoved = lastMove.getTeam();
+
     this.board.movePieceFromTo(undoFromThisCol, undoFromThisRow, undoToThisCol, undoToThisRow);
     if (this.pieceTakenDuringLastMove != null) {
       this.board.addPiece(this.pieceTakenDuringLastMove, undoFromThisCol, undoFromThisRow);
     }
 
     // updates who's turn it is (this covers 1 turn per player game modes).
-    if (this.lastMoveInfo.get("lastTeamThatMoved") == 1) {
+    if (lastTeamThatMoved == Team.ONE) {
       this.currentPlayer = this.p1;
-    } else if (this.lastMoveInfo.get("lastTeamThatMoved") == 2) {
+    } else {
       this.currentPlayer = this.p2;
     }
 
-    this.lastMoveInfo.clear();
+    lastMove = null;
   }
 
   @Override
@@ -216,4 +203,17 @@ public abstract class AChessGame implements IChessGameModel {
   public String getGameModeName() {
     return "Chess";
   }
+
+  public List<Move> generateAllPossibleMovesForTeam(Team team) {
+    List<Move> allMoves = new ArrayList<Move>();
+
+    for(IPiece piece : board.getAllPiecesOnBoard()) {
+      if(piece.getTeam() == team) {
+        allMoves.addAll(piece.generateAllPossibleMoves(board));
+      }
+    }
+
+    return allMoves;
+  }
+
 }

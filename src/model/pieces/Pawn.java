@@ -4,9 +4,12 @@ package model.pieces;
  * Created by danielchu on 12/30/16.
  */
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import model.Move;
 import model.board.IBoard;
 import model.players.Team;
 
@@ -103,6 +106,15 @@ public class Pawn extends APiece {
     //TODO implement this
     Set<IPiece> result = new HashSet<IPiece>();
     return result;
+  }
+
+  @Override
+  public List<Move> generateAllPossibleMoves(IBoard board) {
+    List<Move> allMoves = new ArrayList<Move>();
+
+    // TODO implement this
+
+    return allMoves;
   }
 
   @Override

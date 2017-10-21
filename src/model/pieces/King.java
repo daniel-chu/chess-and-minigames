@@ -1,8 +1,11 @@
 package model.pieces;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import model.Move;
 import model.board.IBoard;
 import model.players.Team;
 
@@ -42,9 +45,9 @@ public class King extends APiece {
     if (distCol > 1 || distRow > 1 || (distCol == 0 && distRow == 0)) {
       return false;
     }
-    if(this.willBeInCheck(targetCol, targetRow, board)) {
-      return false;
-    }
+    // TODO check that king is not in check after move, maybe with guarded by method (king does
+    // not have this because it does not need to be guarded as it cant be taken. also prevents
+    // infinite loop)
     return super.pathFree(targetCol, targetRow, board);
   }
 
@@ -57,30 +60,40 @@ public class King extends APiece {
   @Override
   public Set<IPiece> canTakeThese(IBoard board) {
     Set<IPiece> result = new HashSet<IPiece>();
-    // up
-    super.simulateAttacks(this.col, this.row - 1, 0, -1, board);
-    // down
-    super.simulateAttacks(this.col, this.row + 1, 0, 1, board);
-    // left
-    super.simulateAttacks(this.col - 1, this.row, -1, 0, board);
-    // right
-    super.simulateAttacks(this.col + 1, this.row, 1, 0, board);
-    return result;
-  }
+    List<Move> movesKingCanTake = new ArrayList<Move>();
 
-  public boolean willBeInCheck(int targetCol, int targetRow, IBoard board) {
-    // TODO implement check for if King will be in Check
-    return false;
-  }
+    addMoveIfKingIsAbleToMoveTo(movesKingCanTake, col + 1, row, board);
+    addMoveIfKingIsAbleToMoveTo(movesKingCanTake, col, row - 1, board);
+    addMoveIfKingIsAbleToMoveTo(movesKingCanTake, col, row + 1, board);
+    addMoveIfKingIsAbleToMoveTo(movesKingCanTake, col - 1, row, board);
 
-  private Set<IPiece> filterGuardedPieces(Set<IPiece> allPieces, IBoard board) {
-    Set<IPiece> result = new HashSet<IPiece>();
-    for(IPiece piece : allPieces) {
-      if(!this.willBeInCheck(piece.getCol(), piece.getRow(), board)) {
-        result.add(piece);
+    for(Move move : movesKingCanTake) {
+      IPiece target = board.getPieceAt(move.getToCol(), move.getToRow());
+      if ((target != null) && (target.getTeam() != team)) {
+        result.add(target);
       }
     }
+
     return result;
+  }
+
+  private void addMoveIfKingIsAbleToMoveTo(List<Move> moves, int targetCol, int targetRow, IBoard
+          board) {
+    if (board.validCoordinates(targetCol, targetRow) && validMove(targetCol, targetRow, board)) {
+      moves.add(new Move(team, col, row, targetCol, targetRow));
+    }
+  }
+
+  @Override
+  public List<Move> generateAllPossibleMoves(IBoard board) {
+    List<Move> allMoves = new ArrayList<Move>();
+
+    addMoveIfKingIsAbleToMoveTo(allMoves, col + 1, row, board);
+    addMoveIfKingIsAbleToMoveTo(allMoves, col, row - 1, board);
+    addMoveIfKingIsAbleToMoveTo(allMoves, col, row + 1, board);
+    addMoveIfKingIsAbleToMoveTo(allMoves, col - 1, row, board);
+
+    return allMoves;
   }
 
   @Override

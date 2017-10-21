@@ -99,14 +99,14 @@ public class PieceTests {
     Set<IPiece> t2queenTakenBy = new HashSet<IPiece>();
     t2queenTakenBy.add(t1rook);
     t2queenTakenBy.add(t1knight);
-    assertEquals(t2queenTakenBy, t2queen.canBeTakenBy(board));
+    assertEquals(t2queenTakenBy, t2queen.canBeTakenByPieces(board));
 
     Set<IPiece> t1rookTakenBy = new HashSet<IPiece>();
     t1rookTakenBy.add(t2knight);
     //TODO once pawn is done add this back in
 //    t1rookTakenBy.add(t2pawn);
     t1rookTakenBy.add(t2queen);
-    assertEquals(t1rookTakenBy, t1rook.canBeTakenBy(board));
+    assertEquals(t1rookTakenBy, t1rook.canBeTakenByPieces(board));
   }
 
 }
