@@ -1,6 +1,8 @@
 # Chess and Minigames
 Play standard chess and various mini games.
 
+![screenshot](https://github.com/daniel-chu/chess-and-minigames/blob/master/screenshot.png?raw=true)
+
 ## How to Use
 **Running**  
 Run the jar with a single argument &lt;gametype&gt; like this:  
